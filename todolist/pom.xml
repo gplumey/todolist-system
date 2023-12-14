@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>todolist-conainer</module>
+        <module>todolist-container</module>
         <module>todolist-application</module>
         <module>todolist-domain</module>
         <module>todolist-dataaccess</module>
