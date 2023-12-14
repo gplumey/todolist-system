@@ -12,5 +12,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>todolist-domain-core</module>
+        <module>todolist-domain-service</module>
     </modules>
 </project>

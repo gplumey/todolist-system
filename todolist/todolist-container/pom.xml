@@ -11,5 +11,16 @@
 
     <artifactId>todolist-container</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.gplumey</groupId>
+            <artifactId>todolist-application</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.gplumey</groupId>
+            <artifactId>todolist-dataaccess</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>

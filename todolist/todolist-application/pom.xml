@@ -11,5 +11,10 @@
 
     <artifactId>todolist-application</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>org.gplumey</groupId>
+            <artifactId>todolist-domain-service</artifactId>
+        </dependency>
+    </dependencies>
 </project>
