@@ -1,6 +1,6 @@
 package org.gplumey.common.domain.core.usecase;
 
-public interface QueryHandler<Q, R> extends Usecase {
+public interface QueryHandler<R, Q> extends Usecase {
 
-    R requend(Q query);
+    R request(Q query);
 }

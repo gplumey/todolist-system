@@ -21,6 +21,7 @@ public class TestApplication {
     public TodolistRepository todolistRepository() {
         return Mockito.mock(TodolistRepository.class);
     }
+
     @Bean
     public LocaleResolver localeResolver() {
         AcceptHeaderLocaleResolver slr = new AcceptHeaderLocaleResolver();

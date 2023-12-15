@@ -18,7 +18,6 @@ public class TodolistName {
 
     public TodolistName(String value) {
         this.value = notBlank(value, "value for TodolistName must not be null");
-
     }
 
     public static TodolistName of(String name){
