@@ -6,8 +6,6 @@ import org.gplumey.todolist.domain.service.port.input.TodolistService;
 import org.gplumey.todolist.domain.service.port.output.TodolistRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @AllArgsConstructor
 @Service
 public class TodolistServiceImpl  implements TodolistService {
@@ -18,4 +16,5 @@ public class TodolistServiceImpl  implements TodolistService {
     public Iterable<Todolist> readAll() {
         return todolistRepository.findAll();
     }
+
 }

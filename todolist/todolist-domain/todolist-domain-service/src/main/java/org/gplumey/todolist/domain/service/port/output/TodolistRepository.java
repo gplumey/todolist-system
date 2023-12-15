@@ -6,4 +6,6 @@ public interface TodolistRepository  {
 
     Iterable<Todolist> findAll();
 
+    Todolist save(Todolist todolist);
+
 }
