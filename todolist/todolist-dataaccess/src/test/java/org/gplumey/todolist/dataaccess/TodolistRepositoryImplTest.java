@@ -1,7 +1,7 @@
 package org.gplumey.todolist.dataaccess;
 
 import org.gplumey.todolist.domain.core.entity.Todolist;
-import org.gplumey.todolist.domain.service.port.output.TodolistRepository;
+import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,12 +18,12 @@ class TodolistRepositoryImplTest {
 
 
     @Autowired
-    TodolistRepository todolistRepository;
+    TodolistReadRepository readRepository;
 
     @Test
     void findAll() {
-        List<Todolist> result = StreamSupport.stream(todolistRepository.findAll().spliterator(), false)
-                                                   .collect(Collectors.toList());;
+        List<Todolist> result = StreamSupport.stream(readRepository.findAll().spliterator(), false)
+                                             .collect(Collectors.toList());
         assertThat(result, contains(hasProperty("name", hasProperty("value", equalTo("first todolist")))));
     }
 }

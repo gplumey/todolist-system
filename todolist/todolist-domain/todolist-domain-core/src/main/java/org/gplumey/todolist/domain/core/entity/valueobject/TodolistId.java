@@ -13,6 +13,10 @@ public class TodolistId extends BaseId<UUID> {
         return new TodolistId(UUID.fromString(uuid));
     }
 
+    public static TodolistId of(UUID uuid) {
+        return new TodolistId(uuid);
+    }
+
     public static TodolistId create() {
         return new TodolistId(UUID.randomUUID());
     }

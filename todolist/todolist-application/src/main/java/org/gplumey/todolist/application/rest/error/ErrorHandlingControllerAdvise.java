@@ -2,6 +2,7 @@ package org.gplumey.todolist.application.rest.error;
 
 
 import jakarta.validation.ConstraintViolationException;
+import org.gplumey.todolist.domain.core.execption.TodolistNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,4 +25,12 @@ public class ErrorHandlingControllerAdvise {
         problemDetail.setProperty("errors", cve.getConstraintViolations().stream().map(v -> v.getMessage()));
         return problemDetail;
     }
+
+    @ExceptionHandler
+    ProblemDetail handle(TodolistNotFoundException nfe) {
+        ProblemDetail problemDetail =  ProblemDetail.forStatus(HttpStatus.NOT_FOUND.value());
+        problemDetail.setDetail(nfe.getMessage());
+        return problemDetail;
+    }
+
 }

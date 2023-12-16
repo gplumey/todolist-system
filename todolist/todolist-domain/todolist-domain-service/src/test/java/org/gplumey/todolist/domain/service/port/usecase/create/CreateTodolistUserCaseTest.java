@@ -2,9 +2,9 @@ package org.gplumey.todolist.domain.service.port.usecase.create;
 
 import jakarta.validation.ConstraintViolationException;
 import org.gplumey.todolist.domain.core.entity.Todolist;
-import org.gplumey.todolist.domain.service.port.input.CreateTodolistCommand;
-import org.gplumey.todolist.domain.service.port.input.CreateTodolistUserCase;
-import org.gplumey.todolist.domain.service.port.output.TodolistRepository;
+import org.gplumey.todolist.domain.service.port.input.CreateTodolistUseCase;
+import org.gplumey.todolist.domain.service.port.input.command.CreateTodolistCommand;
+import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -29,10 +29,10 @@ class CreateTodolistUserCaseTest {
 
 
     @Autowired
-    CreateTodolistUserCase createTodolistUserCase;
+    CreateTodolistUseCase createTodolistUserCase;
 
     @Autowired
-    TodolistRepository todolistRepository;
+    TodolistWriteRepository todolistRepository;
 
     private static Stream<Arguments> should_create_todolist_given_valid_request() {
         return Stream.of(Arguments.of("My first todolist"));

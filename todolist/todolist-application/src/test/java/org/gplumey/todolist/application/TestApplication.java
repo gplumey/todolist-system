@@ -1,6 +1,7 @@
 package org.gplumey.todolist.application;
 
-import org.gplumey.todolist.domain.service.port.output.TodolistRepository;
+import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
+import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,8 +19,13 @@ public class TestApplication {
     }
 
     @Bean
-    public TodolistRepository todolistRepository() {
-        return Mockito.mock(TodolistRepository.class);
+    TodolistReadRepository todolistReadRepository() {
+        return Mockito.mock(TodolistReadRepository.class);
+    }
+
+    @Bean
+    TodolistWriteRepository todolistWriteRepository() {
+        return Mockito.mock(TodolistWriteRepository.class);
     }
 
     @Bean

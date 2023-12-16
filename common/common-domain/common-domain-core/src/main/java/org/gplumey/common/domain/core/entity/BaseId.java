@@ -10,6 +10,10 @@ public class BaseId<T> {
         this.value = Objects.requireNonNull(value);
     }
 
+    public static <T> T nullSafeValue(BaseId<T> id) {
+        return id == null ? null : id.getValue();
+    }
+
     public T getValue() {
         return value;
     }
@@ -29,8 +33,6 @@ public class BaseId<T> {
 
     @Override
     public String toString() {
-        return "BaseId{" +
-                "value=" + value +
-                '}';
+        return "BaseId{" + "value=" + value + '}';
     }
 }

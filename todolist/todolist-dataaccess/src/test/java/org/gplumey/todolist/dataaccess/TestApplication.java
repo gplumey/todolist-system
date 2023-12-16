@@ -1,11 +1,7 @@
 package org.gplumey.todolist.dataaccess;
 
-import org.gplumey.todolist.domain.service.port.input.TodolistService;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication()
 public class TestApplication {

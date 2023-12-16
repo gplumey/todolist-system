@@ -10,17 +10,16 @@ import static org.gplumey.common.domain.core.util.Assert.notBlank;
 @EqualsAndHashCode
 @Getter
 @ToString
-public class TodolistName {
+public class TaskLabel {
 
     private final String value;
 
-    public TodolistName(String value) {
-        this.value = notBlank(value, "value for TodolistName must not be blank");
+    public TaskLabel(String value) {
+        this.value = notBlank(value, "value for TaskName must not be blank");
     }
 
-    public static TodolistName of(String name){
-        return new TodolistName(name);
+    public static TaskLabel of(String name){
+        return new TaskLabel(name);
     }
-
 
 }
