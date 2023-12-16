@@ -11,5 +11,16 @@
 
     <artifactId>todolist-dataaccess</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.gplumey</groupId>
+            <artifactId>todolist-domain-service</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
