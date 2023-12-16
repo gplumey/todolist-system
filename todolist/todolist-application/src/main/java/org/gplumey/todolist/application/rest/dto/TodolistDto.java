@@ -2,6 +2,7 @@ package org.gplumey.todolist.application.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.gplumey.todolist.application.rest.TodolistController;
 import org.gplumey.todolist.domain.core.entity.Todolist;
@@ -15,6 +16,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Builder
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class TodolistDto extends RepresentationModel<TodolistDto> {
     private final String id;
     private final String name;

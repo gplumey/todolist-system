@@ -20,7 +20,6 @@ public class CreateTodolistUseCase implements CommandHandler<Todolist, CreateTod
     public Todolist execute(CreateTodolistCommand command) {
         validator.validate(command);
         Todolist newTodolist = Todolist.create(command.name());
-        Todolist savedTodolist = repository.save(newTodolist);
-        return savedTodolist;
+        return repository.save(newTodolist);
     }
 }
