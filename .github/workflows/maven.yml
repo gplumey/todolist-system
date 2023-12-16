@@ -9,8 +9,6 @@
 name: Java CI with Maven
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -28,13 +26,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn -B install --file pom.xml
-      - name: Generate JaCoCo Badge
-        uses: cicirello/jacoco-badge-generator@v2
-        with:
-          generate-branches-badge: true
-          jacoco-csv-file: todolist/repost-aggregate/target/site/jacoco-aggregate/jacoco.csv
-    
+        run: mvn -B test --file pom.xml
     
     
     
