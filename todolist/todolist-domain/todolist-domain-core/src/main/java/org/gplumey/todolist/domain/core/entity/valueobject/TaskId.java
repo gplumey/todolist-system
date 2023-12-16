@@ -12,4 +12,8 @@ public class TaskId extends BaseId<UUID> {
     public static TaskId create() {
         return new TaskId(UUID.randomUUID());
     }
+
+    public static TaskId of(UUID uuid) {
+        return new TaskId(uuid);
+    }
 }

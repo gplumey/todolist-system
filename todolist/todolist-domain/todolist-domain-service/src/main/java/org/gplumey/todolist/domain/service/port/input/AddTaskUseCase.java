@@ -26,7 +26,7 @@ public class AddTaskUseCase implements CommandHandler<Task, AddTaskCommand> {
         validator.validate(addTaskCommand);
         TodolistId todolistId = addTaskCommand.todolistId();
         Todolist todolist = readRepository.get(todolistId).orElseThrow(() -> new TodolistNotFoundException(todolistId));
-        Task task = todolist.addTask(addTaskCommand.taskname());
+        Task task = todolist.addTask(addTaskCommand.label());
         writeRepository.save(todolist);
         return task;
     }

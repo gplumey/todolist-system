@@ -69,7 +69,7 @@ class AddTaskUseCaseTest {
     void should_fail_when_name_is_null() {
         Executable exec = () -> useCase.execute(new AddTaskCommand(todolistId, null));
         Throwable thrown = assertThrows(ConstraintViolationException.class, exec);
-        assertEquals("taskname: must not be blank", thrown.getMessage());
+        assertEquals("label: must not be blank", thrown.getMessage());
         verify(writeRepository, never()).save(any());
     }
 
