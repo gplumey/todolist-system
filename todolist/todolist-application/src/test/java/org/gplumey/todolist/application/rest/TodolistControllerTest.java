@@ -1,5 +1,6 @@
 package org.gplumey.todolist.application.rest;
 
+import org.gplumey.todolist.domain.core.entity.Task;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
@@ -15,6 +16,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.reset;
@@ -75,5 +77,22 @@ class TodolistControllerTest {
                      .isEqualTo("My todolist")
                      .jsonPath("$.id")
                      .isNotEmpty();
+    }
+
+
+    @Test
+    void should_get_task() {
+        Todolist todolist = Todolist.builder().id(TodolistId.create()).name(TodolistName.of("test todolist")).build();
+        Task task1 = todolist.addTask("task 1");
+        Task task2 = todolist.addTask("task 8");
+        when(readRepository.get(any())).thenReturn(Optional.of(todolist));
+        webTestClient.get()
+                     .uri("/todolist/" + todolist.getId().getValue() + "/task/" + task2.getId().getValue())
+                     .exchange()
+                     .expectStatus()
+                     .isEqualTo(HttpStatus.OK.value())
+                     .expectBody()
+                     .jsonPath("$.label")
+                     .isEqualTo("task 8");
     }
 }

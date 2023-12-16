@@ -7,14 +7,13 @@ import org.gplumey.todolist.application.rest.dto.TaskDto;
 import org.gplumey.todolist.application.rest.dto.TodolistDto;
 import org.gplumey.todolist.domain.core.entity.Task;
 import org.gplumey.todolist.domain.core.entity.Todolist;
+import org.gplumey.todolist.domain.core.entity.valueobject.TaskId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
-import org.gplumey.todolist.domain.service.port.input.AddTaskUseCase;
-import org.gplumey.todolist.domain.service.port.input.CreateTodolistUseCase;
-import org.gplumey.todolist.domain.service.port.input.GetAllTodolistUseCase;
-import org.gplumey.todolist.domain.service.port.input.GetTodolistUsecase;
+import org.gplumey.todolist.domain.service.port.input.*;
 import org.gplumey.todolist.domain.service.port.input.command.AddTaskCommand;
 import org.gplumey.todolist.domain.service.port.input.command.CreateTodolistCommand;
 import org.gplumey.todolist.domain.service.port.input.query.GetAllTodolistQuery;
+import org.gplumey.todolist.domain.service.port.input.query.GetTaskQuery;
 import org.gplumey.todolist.domain.service.port.input.query.GetTodolistQuery;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +30,7 @@ public class TodolistController {
     private final CreateTodolistUseCase createTodolistUserCase;
     private final GetAllTodolistUseCase getAllTodolistUseCase;
     private final GetTodolistUsecase getTodolistUsecase;
+    private final GetTaskUsecase getTaskUsecase;
     private final AddTaskUseCase addTaskUseCase;
 
     @GetMapping
@@ -46,6 +46,11 @@ public class TodolistController {
         return TodolistDto.of(getTodolistUsecase.request(new GetTodolistQuery(TodolistId.of(id))));
     }
 
+    @GetMapping("/{todolistId}/task/{taskId}")
+    public TaskDto getTask(@PathVariable UUID todolistId, @PathVariable UUID taskId) {
+        return TaskDto.of(getTaskUsecase.request(new GetTaskQuery(TodolistId.of(todolistId), TaskId.of(taskId))));
+    }
+
     @PostMapping
     public TodolistDto create(@RequestBody CreateTodolistCommand command) {
         Todolist todolist = createTodolistUserCase.execute(command);
@@ -53,7 +58,7 @@ public class TodolistController {
     }
 
     @PostMapping("/{todolistId}/task")
-    public TaskDto create(@PathVariable UUID todolistId, @RequestBody AddTaskDto body) {
+    public TaskDto postTask(@PathVariable UUID todolistId, @RequestBody AddTaskDto body) {
         AddTaskCommand command = new AddTaskCommand(TodolistId.of(todolistId), body.label());
         Task task = addTaskUseCase.execute(command);
         return TaskDto.of(task);
