@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.gplumey</groupId>
+        <artifactId>todolist</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>todolist-application-graphql</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.gplumey</groupId>
+            <artifactId>todolist-domain-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-graphql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.graphql-java-generator</groupId>
+            <artifactId>graphql-java-server-runtime</artifactId>
+            <version>${graphql-maven-plugin.version}</version>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <!-- com.graphql-java:graphiql-spring-boot-starter is deprecated. This
+                project has been moved to com.graphql-java-kickstart -->
+            <groupId>com.graphql-java-kickstart</groupId>
+            <artifactId>graphiql-spring-boot-starter</artifactId>
+            <version>6.0.1</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.graphql-java-generator</groupId>
+            <artifactId>graphql-java-runtime</artifactId>
+            <version>1.18</version>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>com.graphql-java-generator</groupId>
+                <artifactId>graphql-maven-plugin</artifactId>
+                <version>${graphql-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generatePojo</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Let's configure the GraphQL Gradle Plugin: -->
+                    <!-- All available parameters are described here: -->
+                    <!-- https://graphql-maven-plugin-project.graphql-java-generator.com/graphql-maven-plugin/generateServerCode-mojo.html -->
+                    <packageName>org.gplumey.todolist.application.graphql.schema.generated</packageName>
+                    <!--<scanBasePackages>com.hivook.system.common.schema</scanBasePackages>-->
+                    <customScalars>
+                        <customScalar>
+                            <graphQLTypeName>Date</graphQLTypeName>
+                            <javaType>java.util.Date</javaType>
+                            <graphQLScalarTypeStaticField>
+                                com.graphql_java_generator.customscalars.GraphQLScalarTypeDate.Date
+                            </graphQLScalarTypeStaticField>
+                        </customScalar>
+                    </customScalars>
+                    <!-- The parameters below change the 1.x default behavior. They are set to respect the behavior of the future 2.x versions -->
+                    <copyRuntimeSources>false</copyRuntimeSources>
+                    <generateBatchLoaderEnvironment>true</generateBatchLoaderEnvironment>
+                    <separateUtilityClasses>true</separateUtilityClasses>
+                    <skipGenerationIfSchemaHasNotChanged>true</skipGenerationIfSchemaHasNotChanged>
+                    <schemaFileFolder>src/main/resources/graphql</schemaFileFolder>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

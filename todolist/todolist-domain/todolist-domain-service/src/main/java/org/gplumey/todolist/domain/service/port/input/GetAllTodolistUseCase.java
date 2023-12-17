@@ -7,14 +7,16 @@ import org.gplumey.todolist.domain.service.port.input.query.GetAllTodolistQuery;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
+
 @AllArgsConstructor
 @Component
-public class GetAllTodolistUseCase implements QueryHandler<Iterable<Todolist>, GetAllTodolistQuery> {
+public class GetAllTodolistUseCase implements QueryHandler<Collection<Todolist>, GetAllTodolistQuery> {
 
     private final TodolistReadRepository repository;
 
     @Override
-    public Iterable<Todolist> request(GetAllTodolistQuery getAllTodolistQuery) {
+    public Collection<Todolist> request(GetAllTodolistQuery getAllTodolistQuery) {
         return repository.findAll();
     }
 }

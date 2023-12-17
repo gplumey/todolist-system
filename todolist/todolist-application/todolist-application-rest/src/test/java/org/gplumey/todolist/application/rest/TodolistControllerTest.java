@@ -1,5 +1,6 @@
 package org.gplumey.todolist.application.rest;
 
+import org.gplumey.todolist.application.rest.dto.AddTaskDto;
 import org.gplumey.todolist.domain.core.entity.Task;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +44,7 @@ class TodolistControllerTest {
     @Test
     void list() throws Exception {
         String defaultTodoListName = "Default todolist";
-        Iterable<Todolist> mockData = List.of(Todolist.builder().id(TodolistId.create()).name(TodolistName.of(defaultTodoListName)).build());
+        Collection<Todolist> mockData = List.of(Todolist.builder().id(TodolistId.create()).name(TodolistName.of(defaultTodoListName)).build());
         when(readRepository.findAll()).thenReturn(mockData);
         webTestClient.get().uri("/todolist").exchange().expectStatus().isOk()
                      .expectBody().jsonPath("$.length()").isEqualTo(1)
@@ -94,5 +96,40 @@ class TodolistControllerTest {
                      .expectBody()
                      .jsonPath("$.label")
                      .isEqualTo("task 8");
+    }
+
+
+    @Test
+    void should_add_task() {
+        Todolist todolist = Todolist.builder().id(TodolistId.create()).name(TodolistName.of("test todolist")).build();
+        var newTask = new AddTaskDto("my new task");
+        when(readRepository.get(any())).thenReturn(Optional.of(todolist));
+        webTestClient.post()
+                     .uri("/todolist/" + todolist.getId().getValue() + "/task")
+                     .body(Mono.just(newTask), AddTaskDto.class)
+                     .exchange()
+                     .expectStatus()
+                     .isEqualTo(HttpStatus.OK.value())
+                     .expectBody()
+                     .jsonPath("$.label")
+                     .isEqualTo("my new task")
+                     .jsonPath("$.id")
+                     .isNotEmpty();
+        ;
+    }
+
+
+    @Test
+    void should_get_todolist() {
+        Todolist todolist = Todolist.builder().id(TodolistId.create()).name(TodolistName.of("test todolist")).build();
+        when(readRepository.get(any())).thenReturn(Optional.of(todolist));
+        webTestClient.get()
+                     .uri("/todolist/" + todolist.getId().getValue())
+                     .exchange()
+                     .expectStatus()
+                     .isEqualTo(HttpStatus.OK.value())
+                     .expectBody()
+                     .jsonPath("$.name")
+                     .isEqualTo("test todolist");
     }
 }

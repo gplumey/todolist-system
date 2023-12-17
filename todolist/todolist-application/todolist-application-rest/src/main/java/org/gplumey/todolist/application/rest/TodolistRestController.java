@@ -23,9 +23,8 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping(value = "/todolist")
-
 @AllArgsConstructor
-public class TodolistController {
+public class TodolistRestController {
     private final CreateTodolistUseCase createTodolistUserCase;
     private final GetAllTodolistUseCase getAllTodolistUseCase;
     private final GetTodolistUsecase getTodolistUsecase;

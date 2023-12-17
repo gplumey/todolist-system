@@ -2,9 +2,8 @@ package org.gplumey.todolist.application.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.gplumey.todolist.application.rest.TodolistController;
+import org.gplumey.todolist.application.rest.TodolistRestController;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -16,7 +15,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Builder
 @AllArgsConstructor
 @Getter
-@EqualsAndHashCode
 public class TodolistDto extends RepresentationModel<TodolistDto> {
     private final String id;
     private final String name;
@@ -29,8 +27,8 @@ public class TodolistDto extends RepresentationModel<TodolistDto> {
                                      .tasks(domain.getTasks().stream().map(TaskDto::of).toList())
                                      .build();
 
-        dto.add(linkTo(methodOn(TodolistController.class).get(domain.getId().getValue())).withSelfRel());
-        dto.add(linkTo(methodOn(TodolistController.class).postTask(domain.getId().getValue(), null)).withRel("add-task"));
+        dto.add(linkTo(methodOn(TodolistRestController.class).get(domain.getId().getValue())).withSelfRel());
+        dto.add(linkTo(methodOn(TodolistRestController.class).postTask(domain.getId().getValue(), null)).withRel("add-task"));
 
         return dto;
     }

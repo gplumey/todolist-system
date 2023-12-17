@@ -1,0 +1,16 @@
+type TodolistGQL {
+    id: String!
+    name: String
+    tasks: [TaskGQL]
+}
+
+type TaskGQL {
+    id:String!
+    label:String
+}
+
+
+input AddTaskInput {
+    todolistId: String!
+    label: String!
+}
