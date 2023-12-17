@@ -7,6 +7,7 @@ import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,7 +26,7 @@ public class TodolistRepositoryImpl implements TodolistWriteRepository, Todolist
     }
 
     @Override
-    public Iterable<Todolist> findAll() {
+    public Collection<Todolist> findAll() {
         return Collections.unmodifiableCollection(map.values());
     }
 

@@ -25,11 +25,10 @@ public class GetTaskUsecase implements QueryHandler<Task, GetTaskQuery> {
         validator.validate(query);
         TodolistId todolistId = query.todolistId();
         Todolist todolist = repository.get(todolistId).orElseThrow(() -> new TodolistNotFoundException(query.todolistId()));
-        Task task = todolist.getTasks()
-                            .stream()
-                            .filter(t -> t.getId().equals(query.taskId()))
-                            .findFirst()
-                            .orElseThrow(() -> new TaskNotFoundException(query.taskId()));
-        return task;
+        return todolist.getTasks()
+                       .stream()
+                       .filter(t -> t.getId().equals(query.taskId()))
+                       .findFirst()
+                       .orElseThrow(() -> new TaskNotFoundException(query.taskId()));
     }
 }

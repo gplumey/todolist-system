@@ -23,4 +23,14 @@ public class Task extends BaseEntity<TaskId> {
         this.todolistId = Objects.requireNonNull(todolistId);
         this.label = Objects.requireNonNull(label);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

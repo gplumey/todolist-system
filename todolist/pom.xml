@@ -22,6 +22,10 @@
         <relativePath/>
     </parent>
 
+    <properties>
+        <graphql-maven-plugin.version>1.18.6</graphql-maven-plugin.version>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -33,6 +37,11 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>2.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-graphql</artifactId>
+                <version>3.1.2</version>
             </dependency>
 
             <dependency>
@@ -48,7 +57,12 @@
             </dependency>
             <dependency>
                 <groupId>org.gplumey</groupId>
-                <artifactId>todolist-application</artifactId>
+                <artifactId>todolist-application-rest</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.gplumey</groupId>
+                <artifactId>todolist-application-graphql</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>

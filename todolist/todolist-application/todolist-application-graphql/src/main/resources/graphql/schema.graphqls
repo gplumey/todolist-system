@@ -1,0 +1,8 @@
+type Query {
+    todolists: [TodolistGQL]
+}
+
+
+type Mutation {
+    addTask(addTaskInput: AddTaskInput!): TaskGQL
+}

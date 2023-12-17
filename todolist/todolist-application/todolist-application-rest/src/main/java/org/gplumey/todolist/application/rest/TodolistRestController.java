@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping(value = "/todolist")
-
 @AllArgsConstructor
-public class TodolistController {
+public class TodolistRestController {
     private final CreateTodolistUseCase createTodolistUserCase;
     private final GetAllTodolistUseCase getAllTodolistUseCase;
     private final GetTodolistUsecase getTodolistUsecase;
@@ -38,7 +36,7 @@ public class TodolistController {
         Iterable<Todolist> data = getAllTodolistUseCase.request(new GetAllTodolistQuery());
         return StreamSupport.stream(data.spliterator(), true)
                             .map(TodolistDto::of)
-                            .collect(Collectors.toList());
+                            .toList();
     }
 
     @GetMapping("/{id}")

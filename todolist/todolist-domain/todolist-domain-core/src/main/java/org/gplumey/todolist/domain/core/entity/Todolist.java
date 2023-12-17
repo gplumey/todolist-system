@@ -19,9 +19,8 @@ import java.util.List;
 @Getter
 public class Todolist extends AggregateRoot<TodolistId> {
 
-    public final static int MAX_TASK_COUNT = 100;
+    private static final int MAX_TASK_COUNT = 100;
     private TodolistName name;
-
     private List<Task> tasks;
 
     @Builder
@@ -53,5 +52,15 @@ public class Todolist extends AggregateRoot<TodolistId> {
 
     public Collection<Task> getTasks() {
         return Collections.unmodifiableList(tasks);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

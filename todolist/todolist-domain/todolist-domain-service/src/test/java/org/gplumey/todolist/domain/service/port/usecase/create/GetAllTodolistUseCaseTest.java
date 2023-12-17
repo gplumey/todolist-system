@@ -33,7 +33,7 @@ class GetAllTodolistUseCaseTest {
     @Autowired
     TodolistReadRepository readRepository;
 
-    Iterable<Todolist> mockList = List.of(Todolist.builder().id(TodolistId.create()).name(TodolistName.of("todolist 1")).build(),
+    Collection<Todolist> mockList = List.of(Todolist.builder().id(TodolistId.create()).name(TodolistName.of("todolist 1")).build(),
             Todolist.builder().id(TodolistId.create()).name(TodolistName.of("todolist 2")).build());
 
     @BeforeEach
