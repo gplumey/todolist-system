@@ -4,5 +4,5 @@ type Query {
 
 
 type Mutation {
-    addTodo(addTodoInput: AddTodoInputGraphQL!): TodoGraphQL
+    createTodo(createTodoInput: CreateTodoInputGraphQL!): TodoGraphQL
 }

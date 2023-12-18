@@ -1,8 +1,9 @@
-package org.gplumey.todolist.application.rest.dto;
+package org.gplumey.todolist.application.rest.dto.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.gplumey.todolist.application.rest.TodoRestController;
 import org.gplumey.todolist.application.rest.TodolistRestController;
 import org.gplumey.todolist.domain.core.entity.Todo;
 import org.springframework.hateoas.RepresentationModel;
@@ -21,7 +22,8 @@ public class TodoResource extends RepresentationModel<TodolistResource> {
 
     public static TodoResource of(Todo todo) {
         TodoResource dto = TodoResource.builder().id(todo.getId().getValue()).label(todo.getLabel().getValue()).build();
-        dto.add(linkTo(methodOn(TodolistRestController.class).getTodoByTodolistIdAndTodoId(todo.getTodolistId().getValue(), todo.getId().getValue())).withSelfRel());
+        dto.add(linkTo(methodOn(TodoRestController.class).get(todo.getTodolistId().getValue(),
+                todo.getId().getValue())).withSelfRel());
         dto.add(linkTo(methodOn(TodolistRestController.class).get(todo.getTodolistId().getValue())).withRel("todolist"));
         return dto;
     }

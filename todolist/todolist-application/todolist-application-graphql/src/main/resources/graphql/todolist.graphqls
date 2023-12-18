@@ -10,7 +10,7 @@ type TodoGraphQL {
 }
 
 
-input AddTodoInputGraphQL {
+input CreateTodoInputGraphQL {
     todolistId: String!
     label: String!
 }
