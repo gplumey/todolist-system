@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>org.gplumey</groupId>
-            <artifactId>todolist-dataaccess</artifactId>
+            <artifactId>todolist-infra-data</artifactId>
         </dependency>
 
         <dependency>

@@ -7,9 +7,10 @@
         <groupId>org.gplumey</groupId>
         <artifactId>todolist</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>todolist-dataaccess</artifactId>
+    <artifactId>todolist-infra-data</artifactId>
 
     <dependencies>
         <dependency>
