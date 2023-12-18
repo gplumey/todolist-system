@@ -1,7 +1,7 @@
 package org.gplumey.todolist.application.rest;
 
-import org.gplumey.todolist.application.rest.dto.AddTaskDto;
-import org.gplumey.todolist.domain.core.entity.Task;
+import org.gplumey.todolist.application.rest.dto.AddTodoDto;
+import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
@@ -83,36 +83,36 @@ class TodolistControllerTest {
 
 
     @Test
-    void should_get_task() {
+    void should_get_todo_by_todolistId_and_todoId() {
         Todolist todolist = Todolist.builder().id(TodolistId.create()).name(TodolistName.of("test todolist")).build();
-        Task task1 = todolist.addTask("task 1");
-        Task task2 = todolist.addTask("task 8");
+        todolist.addTodo("todo 1");
+        Todo todo2 = todolist.addTodo("todo 2");
         when(readRepository.get(any())).thenReturn(Optional.of(todolist));
         webTestClient.get()
-                     .uri("/todolist/" + todolist.getId().getValue() + "/task/" + task2.getId().getValue())
+                     .uri("/todolist/" + todolist.getId().getValue() + "/todo/" + todo2.getId().getValue())
                      .exchange()
                      .expectStatus()
                      .isEqualTo(HttpStatus.OK.value())
                      .expectBody()
                      .jsonPath("$.label")
-                     .isEqualTo("task 8");
+                     .isEqualTo("todo 2");
     }
 
 
     @Test
-    void should_add_task() {
+    void should_add_todo() {
         Todolist todolist = Todolist.builder().id(TodolistId.create()).name(TodolistName.of("test todolist")).build();
-        var newTask = new AddTaskDto("my new task");
+        var newTask = new AddTodoDto("my new todo");
         when(readRepository.get(any())).thenReturn(Optional.of(todolist));
         webTestClient.post()
-                     .uri("/todolist/" + todolist.getId().getValue() + "/task")
-                     .body(Mono.just(newTask), AddTaskDto.class)
+                     .uri("/todolist/" + todolist.getId().getValue() + "/todo")
+                     .body(Mono.just(newTask), AddTodoDto.class)
                      .exchange()
                      .expectStatus()
                      .isEqualTo(HttpStatus.OK.value())
                      .expectBody()
                      .jsonPath("$.label")
-                     .isEqualTo("my new task")
+                     .isEqualTo("my new todo")
                      .jsonPath("$.id")
                      .isNotEmpty();
         ;

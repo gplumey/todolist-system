@@ -1,16 +1,16 @@
-type TodolistGQL {
+type TodolistGraphQL {
     id: String!
     name: String
-    tasks: [TaskGQL]
+    todos: [TodoGraphQL]
 }
 
-type TaskGQL {
+type TodoGraphQL {
     id:String!
     label:String
 }
 
 
-input AddTaskInput {
+input AddTodoInputGraphQL {
     todolistId: String!
     label: String!
 }

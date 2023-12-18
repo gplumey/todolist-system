@@ -2,18 +2,18 @@ package org.gplumey.todolist.application.rest;
 
 
 import lombok.AllArgsConstructor;
-import org.gplumey.todolist.application.rest.dto.AddTaskDto;
-import org.gplumey.todolist.application.rest.dto.TaskDto;
-import org.gplumey.todolist.application.rest.dto.TodolistDto;
-import org.gplumey.todolist.domain.core.entity.Task;
+import org.gplumey.todolist.application.rest.dto.AddTodoDto;
+import org.gplumey.todolist.application.rest.dto.TodoResource;
+import org.gplumey.todolist.application.rest.dto.TodolistResource;
+import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
-import org.gplumey.todolist.domain.core.entity.valueobject.TaskId;
+import org.gplumey.todolist.domain.core.entity.valueobject.TodoId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.service.port.input.*;
-import org.gplumey.todolist.domain.service.port.input.command.AddTaskCommand;
+import org.gplumey.todolist.domain.service.port.input.command.AddTodoCommand;
 import org.gplumey.todolist.domain.service.port.input.command.CreateTodolistCommand;
 import org.gplumey.todolist.domain.service.port.input.query.GetAllTodolistQuery;
-import org.gplumey.todolist.domain.service.port.input.query.GetTaskQuery;
+import org.gplumey.todolist.domain.service.port.input.query.GetTodoQuery;
 import org.gplumey.todolist.domain.service.port.input.query.GetTodolistQuery;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,37 +28,37 @@ public class TodolistRestController {
     private final CreateTodolistUseCase createTodolistUserCase;
     private final GetAllTodolistUseCase getAllTodolistUseCase;
     private final GetTodolistUsecase getTodolistUsecase;
-    private final GetTaskUsecase getTaskUsecase;
-    private final AddTaskUseCase addTaskUseCase;
+    private final GetTodoUsecase getTodoUsecase;
+    private final AddTodoUseCase addTodoUseCase;
 
     @GetMapping
-    public List<TodolistDto> list() {
+    public List<TodolistResource> list() {
         Iterable<Todolist> data = getAllTodolistUseCase.request(new GetAllTodolistQuery());
         return StreamSupport.stream(data.spliterator(), true)
-                            .map(TodolistDto::of)
+                            .map(TodolistResource::of)
                             .toList();
     }
 
     @GetMapping("/{id}")
-    public TodolistDto get(@PathVariable UUID id) {
-        return TodolistDto.of(getTodolistUsecase.request(new GetTodolistQuery(TodolistId.of(id))));
+    public TodolistResource get(@PathVariable UUID id) {
+        return TodolistResource.of(getTodolistUsecase.request(new GetTodolistQuery(TodolistId.of(id))));
     }
 
-    @GetMapping("/{todolistId}/task/{taskId}")
-    public TaskDto getTask(@PathVariable UUID todolistId, @PathVariable UUID taskId) {
-        return TaskDto.of(getTaskUsecase.request(new GetTaskQuery(TodolistId.of(todolistId), TaskId.of(taskId))));
+    @GetMapping("/{todolistId}/todo/{todoId}")
+    public TodoResource getTodoByTodolistIdAndTodoId(@PathVariable UUID todolistId, @PathVariable UUID todoId) {
+        return TodoResource.of(getTodoUsecase.request(new GetTodoQuery(TodolistId.of(todolistId), TodoId.of(todoId))));
     }
 
     @PostMapping
-    public TodolistDto create(@RequestBody CreateTodolistCommand command) {
+    public TodolistResource create(@RequestBody CreateTodolistCommand command) {
         Todolist todolist = createTodolistUserCase.execute(command);
-        return TodolistDto.of(todolist);
+        return TodolistResource.of(todolist);
     }
 
-    @PostMapping("/{todolistId}/task")
-    public TaskDto postTask(@PathVariable UUID todolistId, @RequestBody AddTaskDto body) {
-        AddTaskCommand command = new AddTaskCommand(TodolistId.of(todolistId), body.label());
-        Task task = addTaskUseCase.execute(command);
-        return TaskDto.of(task);
+    @PostMapping("/{todolistId}/todo")
+    public TodoResource postTodo(@PathVariable UUID todolistId, @RequestBody AddTodoDto body) {
+        AddTodoCommand command = new AddTodoCommand(TodolistId.of(todolistId), body.label());
+        Todo todo = addTodoUseCase.execute(command);
+        return TodoResource.of(todo);
     }
 }
