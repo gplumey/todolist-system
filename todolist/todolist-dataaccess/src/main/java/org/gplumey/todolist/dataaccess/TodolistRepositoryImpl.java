@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public class TodolistRepositoryImpl implements TodolistWriteRepository, TodolistReadRepository {
 
+
     static ConcurrentHashMap<TodolistId, Todolist> map = new ConcurrentHashMap<>();
 
     static {
