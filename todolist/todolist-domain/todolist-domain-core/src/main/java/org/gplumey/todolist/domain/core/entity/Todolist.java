@@ -4,11 +4,11 @@ package org.gplumey.todolist.domain.core.entity;
 import lombok.Builder;
 import lombok.Getter;
 import org.gplumey.common.domain.core.entity.AggregateRoot;
-import org.gplumey.todolist.domain.core.entity.valueobject.TaskId;
-import org.gplumey.todolist.domain.core.entity.valueobject.TaskLabel;
+import org.gplumey.todolist.domain.core.entity.valueobject.TodoId;
+import org.gplumey.todolist.domain.core.entity.valueobject.TodoLabel;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
-import org.gplumey.todolist.domain.core.execption.TaskLimitExceededTodolistException;
+import org.gplumey.todolist.domain.core.execption.TodoLimitExceededTodolistException;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -19,15 +19,15 @@ import java.util.List;
 @Getter
 public class Todolist extends AggregateRoot<TodolistId> {
 
-    private static final int MAX_TASK_COUNT = 100;
+    private static final int MAX_TODO_COUNT = 100;
     private TodolistName name;
-    private List<Task> tasks;
+    private List<Todo> todos;
 
     @Builder
-    public Todolist(TodolistId id, TodolistName name, List<Task> tasks) {
+    public Todolist(TodolistId id, TodolistName name, List<Todo> todos) {
         super(id);
         this.name = name;
-        this.tasks = tasks == null ? new LinkedList<>() : new LinkedList<>(tasks);
+        this.todos = todos == null ? new LinkedList<>() : new LinkedList<>(todos);
     }
 
     public static Todolist create(String name) {
@@ -37,21 +37,21 @@ public class Todolist extends AggregateRoot<TodolistId> {
                        .build();
     }
 
-    public Task addTask(String label) {
-        if (tasks.size() >= MAX_TASK_COUNT) {
-            throw new TaskLimitExceededTodolistException(MAX_TASK_COUNT);
+    public Todo addTodo(String label) {
+        if (todos.size() >= MAX_TODO_COUNT) {
+            throw new TodoLimitExceededTodolistException(id, MAX_TODO_COUNT);
         }
-        Task newTask = Task.builder()
+        Todo newTodo = Todo.builder()
                            .todolistId(id)
-                           .id(TaskId.create())
-                           .label(TaskLabel.of(label))
+                           .id(TodoId.create())
+                           .label(TodoLabel.of(label))
                            .build();
-        tasks.add(newTask);
-        return newTask;
+        todos.add(newTodo);
+        return newTodo;
     }
 
-    public Collection<Task> getTasks() {
-        return Collections.unmodifiableList(tasks);
+    public Collection<Todo> getTodos() {
+        return Collections.unmodifiableList(todos);
     }
 
     @Override

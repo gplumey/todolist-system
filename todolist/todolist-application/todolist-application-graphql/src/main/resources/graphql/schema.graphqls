@@ -1,8 +1,8 @@
 type Query {
-    todolists: [TodolistGQL]
+    todolists: [TodolistGraphQL]
 }
 
 
 type Mutation {
-    addTask(addTaskInput: AddTaskInput!): TaskGQL
+    addTodo(addTodoInput: AddTodoInputGraphQL!): TodoGraphQL
 }

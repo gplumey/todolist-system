@@ -1,13 +1,13 @@
 package org.gplumey.todolist.domain.service.port.usecase.create;
 
 import jakarta.validation.ConstraintViolationException;
-import org.gplumey.todolist.domain.core.entity.Task;
+import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
 import org.gplumey.todolist.domain.core.execption.TodolistNotFoundException;
-import org.gplumey.todolist.domain.service.port.input.AddTaskUseCase;
-import org.gplumey.todolist.domain.service.port.input.command.AddTaskCommand;
+import org.gplumey.todolist.domain.service.port.input.AddTodoUseCase;
+import org.gplumey.todolist.domain.service.port.input.command.AddTodoCommand;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,11 +31,11 @@ import static org.mockito.Mockito.*;
 
 
 @SpringBootTest
-class AddTaskUseCaseTest {
+class AddTodoUseCaseTest {
 
 
     @Autowired
-    AddTaskUseCase useCase;
+    AddTodoUseCase useCase;
 
     @Autowired
     TodolistWriteRepository writeRepository;
@@ -45,7 +45,7 @@ class AddTaskUseCaseTest {
     TodolistId todolistId = TodolistId.of("095d6c0c-69bc-48f8-b139-d3e06194cdc5");
     Todolist todolist = Todolist.builder().id(todolistId).name(TodolistName.of("Test todolist")).build();
 
-    private static Stream<Arguments> should_add_task_given_valid_request() {
+    private static Stream<Arguments> should_add_todo_given_valid_request() {
         return Stream.of(Arguments.of("My first todolist"));
     }
 
@@ -59,15 +59,15 @@ class AddTaskUseCaseTest {
 
     @ParameterizedTest
     @MethodSource
-    void should_add_task_given_valid_request(String name) {
-        Task task = useCase.execute(new AddTaskCommand(todolistId, name));
+    void should_add_todo_given_valid_request(String name) {
+        Todo task = useCase.execute(new AddTodoCommand(todolistId, name));
         assertEquals(name, task.getLabel().getValue());
         verify(writeRepository).save(any());
     }
 
     @Test
     void should_fail_when_name_is_null() {
-        Executable exec = () -> useCase.execute(new AddTaskCommand(todolistId, null));
+        Executable exec = () -> useCase.execute(new AddTodoCommand(todolistId, null));
         Throwable thrown = assertThrows(ConstraintViolationException.class, exec);
         assertEquals("label: must not be blank", thrown.getMessage());
         verify(writeRepository, never()).save(any());
@@ -75,7 +75,7 @@ class AddTaskUseCaseTest {
 
     @Test
     void should_fail_when_todolist_not_found() {
-        Executable exec = () -> useCase.execute(new AddTaskCommand(TodolistId.of("57106e00-71e6-4cee-8f56-edec23eddbef"), "task name"));
+        Executable exec = () -> useCase.execute(new AddTodoCommand(TodolistId.of("57106e00-71e6-4cee-8f56-edec23eddbef"), "task name"));
         Throwable thrown = assertThrows(TodolistNotFoundException.class, exec);
         assertEquals("Todolist 57106e00-71e6-4cee-8f56-edec23eddbef cannot be found.", thrown.getMessage());
         verify(writeRepository, never()).save(any());

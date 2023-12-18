@@ -15,20 +15,20 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Builder
 @AllArgsConstructor
 @Getter
-public class TodolistDto extends RepresentationModel<TodolistDto> {
+public class TodolistResource extends RepresentationModel<TodolistResource> {
     private final String id;
     private final String name;
-    private final Collection<TaskDto> tasks;
+    private final Collection<TodoResource> todos;
 
-    public static TodolistDto of(Todolist domain) {
-        TodolistDto dto = TodolistDto.builder()
-                                     .id(domain.getId().getValue().toString())
-                                     .name(domain.getName().getValue())
-                                     .tasks(domain.getTasks().stream().map(TaskDto::of).toList())
-                                     .build();
+    public static TodolistResource of(Todolist domain) {
+        TodolistResource dto = TodolistResource.builder()
+                                               .id(domain.getId().getValue().toString())
+                                               .name(domain.getName().getValue())
+                                               .todos(domain.getTodos().stream().map(TodoResource::of).toList())
+                                               .build();
 
         dto.add(linkTo(methodOn(TodolistRestController.class).get(domain.getId().getValue())).withSelfRel());
-        dto.add(linkTo(methodOn(TodolistRestController.class).postTask(domain.getId().getValue(), null)).withRel("add-task"));
+        dto.add(linkTo(methodOn(TodolistRestController.class).postTodo(domain.getId().getValue(), null)).withRel("add-task"));
 
         return dto;
     }
