@@ -1,21 +1,21 @@
-package org.gplumey.todolist.application.graphql;
+package org.gplumey.todolist.application;
 
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import java.util.Locale;
 
-@AutoConfigureHttpGraphQlTester
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+
 @SpringBootApplication(scanBasePackages = "org.gplumey.todolist")
+@AutoConfigureGraphQlTester
+
 public class TestApplication {
 
     public static void main(String[] args) {

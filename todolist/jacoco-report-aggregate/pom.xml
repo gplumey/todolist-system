@@ -26,6 +26,10 @@
         </dependency>
         <dependency>
             <groupId>org.gplumey</groupId>
+            <artifactId>todolist-application-graphql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.gplumey</groupId>
             <artifactId>todolist-domain-service</artifactId>
         </dependency>
         <dependency>

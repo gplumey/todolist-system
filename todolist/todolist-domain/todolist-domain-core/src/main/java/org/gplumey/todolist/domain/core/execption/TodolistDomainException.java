@@ -6,8 +6,4 @@ public class TodolistDomainException extends DomainException {
     public TodolistDomainException(String message) {
         super(message);
     }
-
-    public TodolistDomainException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

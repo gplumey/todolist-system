@@ -22,8 +22,8 @@ public class TodoGraphQLController {
 
 
     @MutationMapping
-    public TodoGraphQL createTodo(@Argument CreateTodoInputGraphQL addTaskInput, DataFetchingFieldSelectionSet selectionSet) {
-        Todo todo = createTodoUseCase.execute(new CreateTodoCommand(TodolistId.of(addTaskInput.getTodolistId()), addTaskInput.getLabel()));
+    public TodoGraphQL createTodo(@Argument CreateTodoInputGraphQL createTodoInput, DataFetchingFieldSelectionSet selectionSet) {
+        Todo todo = createTodoUseCase.execute(new CreateTodoCommand(TodolistId.of(createTodoInput.getTodolistId()), createTodoInput.getLabel()));
         return GraphQLBuilder.of(todo, selectionSet);
     }
 }
