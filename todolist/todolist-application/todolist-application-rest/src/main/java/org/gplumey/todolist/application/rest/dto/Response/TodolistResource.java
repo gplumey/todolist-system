@@ -28,7 +28,7 @@ public class TodolistResource extends RepresentationModel<TodolistResource> {
                                                .todos(domain.getTodos().stream().map(TodoResource::of).toList())
                                                .build();
 
-        dto.add(linkTo(methodOn(TodolistRestController.class).get(domain.getId().getValue())).withSelfRel());
+        dto.add(linkTo(methodOn(TodolistRestController.class).getById(domain.getId().getValue())).withSelfRel());
         dto.add(linkTo(methodOn(TodoRestController.class).post(domain.getId().getValue(), null)).withRel("add-task"));
 
         return dto;

@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
@@ -63,7 +62,7 @@ class TodoRestControllerTest {
         when(readRepository.get(any())).thenReturn(Optional.of(todolist));
         webTestClient.post()
                      .uri("/todolist/" + todolist.getId().getValue() + "/todo")
-                     .body(Mono.just(newTodo), CreateTodoDto.class)
+                     .bodyValue(newTodo)
                      .exchange()
                      .expectStatus()
                      .isEqualTo(HttpStatus.OK.value())

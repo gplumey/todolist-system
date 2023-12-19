@@ -3,12 +3,10 @@ package org.gplumey.todolist.application.rest;
 
 import lombok.AllArgsConstructor;
 import org.gplumey.todolist.application.rest.dto.Response.TodolistResource;
+import org.gplumey.todolist.application.rest.dto.request.CreateTodolistDto;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
-import org.gplumey.todolist.domain.service.port.input.CreateTodolistUseCase;
-import org.gplumey.todolist.domain.service.port.input.GetAllTodolistUseCase;
-import org.gplumey.todolist.domain.service.port.input.GetTodolistUsecase;
-import org.gplumey.todolist.domain.service.port.input.command.CreateTodolistCommand;
+import org.gplumey.todolist.domain.service.port.input.UseCases;
 import org.gplumey.todolist.domain.service.port.input.query.GetAllTodolistQuery;
 import org.gplumey.todolist.domain.service.port.input.query.GetTodolistQuery;
 import org.springframework.web.bind.annotation.*;
@@ -21,29 +19,30 @@ import java.util.stream.StreamSupport;
 @RequestMapping(value = "/todolist")
 @AllArgsConstructor
 public class TodolistRestController {
-    private final CreateTodolistUseCase createTodolistUserCase;
-    private final GetAllTodolistUseCase getAllTodolistUseCase;
-    private final GetTodolistUsecase getTodolistUsecase;
+    private final UseCases.Commands.CreateTodolistUseCase createTodolistUserCase;
+    private final UseCases.Commands.GetAllTodolistUseCase getAllTodolistUseCase;
+    private final UseCases.Queries.GetTodolistUsecase getTodolistUsecase;
 
     @GetMapping
-    public List<TodolistResource> list() {
-        Iterable<Todolist> data = getAllTodolistUseCase.request(new GetAllTodolistQuery());
+    public List<TodolistResource> getAll() {
+        Iterable<Todolist> data = getAllTodolistUseCase.request(new GetAllTodolistQuery() {
+        });
         return StreamSupport.stream(data.spliterator(), true)
                             .map(TodolistResource::of)
                             .toList();
     }
 
     @GetMapping("/{id}")
-    public TodolistResource get(@PathVariable UUID id) {
-        GetTodolistQuery query = new GetTodolistQuery(TodolistId.of(id));
+    public TodolistResource getById(@PathVariable UUID id) {
+        GetTodolistQuery query = () -> TodolistId.of(id);
         Todolist todolist = getTodolistUsecase.request(query);
         return TodolistResource.of(todolist);
     }
 
 
     @PostMapping
-    public TodolistResource post(@RequestBody CreateTodolistCommand command) {
-        Todolist todolist = createTodolistUserCase.execute(command);
+    public TodolistResource createTodolist(@RequestBody CreateTodolistDto command) {
+        Todolist todolist = createTodolistUserCase.execute(CreateTodolistDto.adaptor(command));
         return TodolistResource.of(todolist);
     }
 }

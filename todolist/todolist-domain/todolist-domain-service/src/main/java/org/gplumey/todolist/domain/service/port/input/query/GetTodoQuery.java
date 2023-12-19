@@ -4,5 +4,8 @@ import jakarta.validation.constraints.NotNull;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodoId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 
-public record GetTodoQuery(@NotNull TodolistId todolistId, @NotNull TodoId todoId) {
+public interface GetTodoQuery {
+    @NotNull TodolistId todolistId();
+
+    @NotNull TodoId todoId();
 }

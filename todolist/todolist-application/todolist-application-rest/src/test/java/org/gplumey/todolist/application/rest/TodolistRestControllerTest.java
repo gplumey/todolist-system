@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 import java.util.List;
@@ -55,22 +54,32 @@ class TodolistRestControllerTest {
     private WebTestClient.BodyContentSpec postCreateTodolistCommand(CreateTodolistCommand command, HttpStatus expectedStatus) {
         return webTestClient.post()
                             .uri("/todolist")
-                            .body(Mono.just(command), CreateTodolistCommand.class)
+                            .bodyValue(command)
                             .exchange()
                             .expectStatus()
                             .isEqualTo(expectedStatus.value())
                             .expectBody();
     }
 
+    private CreateTodolistCommand createTodolistCommandAdaptor(String name) {
+        return new CreateTodolistCommand() {
+
+            @Override
+            public String getName() {
+                return name;
+            }
+        };
+    }
+
     @Test
     void should_return_problemDetail_on_IllegalStateException() {
-        CreateTodolistCommand command = new CreateTodolistCommand(null);
+        CreateTodolistCommand command = createTodolistCommandAdaptor(null);
         postCreateTodolistCommand(command, HttpStatus.BAD_REQUEST).jsonPath("$.detail").isEqualTo("name: must not be blank");
     }
 
     @Test
     void should_return_create_todolist() {
-        CreateTodolistCommand command = new CreateTodolistCommand("My todolist");
+        CreateTodolistCommand command = createTodolistCommandAdaptor("My todolist");
         postCreateTodolistCommand(command, HttpStatus.OK).jsonPath("$.name").isEqualTo("My todolist").jsonPath("$.id").isNotEmpty();
     }
 

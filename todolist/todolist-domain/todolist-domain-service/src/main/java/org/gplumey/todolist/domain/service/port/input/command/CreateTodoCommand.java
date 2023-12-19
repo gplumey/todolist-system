@@ -4,5 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 
-public record CreateTodoCommand(@NotNull TodolistId todolistId, @NotBlank String label) {
+public interface CreateTodoCommand {
+    @NotNull
+    TodolistId getTodolistId();
+
+    @NotBlank
+    String getLabel();
 }
