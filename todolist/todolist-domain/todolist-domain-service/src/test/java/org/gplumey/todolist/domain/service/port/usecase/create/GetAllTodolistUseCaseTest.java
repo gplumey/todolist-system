@@ -28,7 +28,7 @@ class GetAllTodolistUseCaseTest {
 
 
     @Autowired
-    UseCases.Commands.GetAllTodolistUseCase useCase;
+    UseCases.Queries.GetAllTodolistUseCase useCase;
 
     @Autowired
     TodolistReadRepository readRepository;

@@ -1,6 +1,8 @@
 package org.gplumey.todolist.domain.service;
 
 
+import io.micrometer.observation.ObservationRegistry;
+import io.micrometer.observation.aop.ObservedAspect;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.mockito.Mockito;
@@ -23,5 +25,15 @@ public class TestApplication {
     @Bean
     TodolistWriteRepository todolistWriteRepository() {
         return Mockito.mock(TodolistWriteRepository.class);
+    }
+
+    @Bean
+    ObservationRegistry observationRegistry() {
+        return ObservationRegistry.create();
+    }
+
+    @Bean
+    ObservedAspect observedAspect(ObservationRegistry observationRegistry) {
+        return new ObservedAspect(observationRegistry);
     }
 }

@@ -1,5 +1,6 @@
 package org.gplumey.todolist.domain.service.impl;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.AllArgsConstructor;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.service.port.input.UseCases;
@@ -11,7 +12,8 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @Component
-public class GetAllTodolistUseCaseImpl implements UseCases.Commands.GetAllTodolistUseCase {
+@Observed
+public class GetAllTodolistUseCaseImpl implements UseCases.Queries.GetAllTodolistUseCase {
 
     private final TodolistReadRepository repository;
 

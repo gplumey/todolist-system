@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TodolistGraphQLController {
 
-    private final UseCases.Commands.GetAllTodolistUseCase getAllTodolistUseCase;
+    private final UseCases.Queries.GetAllTodolistUseCase getAllTodolistUseCase;
 
     @QueryMapping
     public List<TodolistGraphQL> todolists(DataFetchingFieldSelectionSet selectionSet) {

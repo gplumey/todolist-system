@@ -20,14 +20,14 @@ public class UseCases {
         }
 
 
-        public interface GetAllTodolistUseCase extends QueryHandler<Collection<Todolist>, GetAllTodolistQuery> {
-        }
-
         public interface CreateTodoUseCase extends CommandHandler<Todo, CreateTodoCommand> {
         }
     }
 
     public static class Queries {
+        public interface GetAllTodolistUseCase extends QueryHandler<Collection<Todolist>, GetAllTodolistQuery> {
+        }
+
         public interface GetTodoUsecase extends QueryHandler<Todo, GetTodoQuery> {
         }
 

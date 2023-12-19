@@ -20,7 +20,7 @@ import java.util.stream.StreamSupport;
 @AllArgsConstructor
 public class TodolistRestController {
     private final UseCases.Commands.CreateTodolistUseCase createTodolistUserCase;
-    private final UseCases.Commands.GetAllTodolistUseCase getAllTodolistUseCase;
+    private final UseCases.Queries.GetAllTodolistUseCase getAllTodolistUseCase;
     private final UseCases.Queries.GetTodolistUsecase getTodolistUsecase;
 
     @GetMapping

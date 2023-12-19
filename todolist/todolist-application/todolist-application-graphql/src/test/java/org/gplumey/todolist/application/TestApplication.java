@@ -1,5 +1,6 @@
 package org.gplumey.todolist.application;
 
+import io.micrometer.observation.ObservationRegistry;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.mockito.Mockito;
@@ -37,5 +38,10 @@ public class TestApplication {
         AcceptHeaderLocaleResolver slr = new AcceptHeaderLocaleResolver();
         slr.setDefaultLocale(Locale.US);
         return slr;
+    }
+
+    @Bean
+    ObservationRegistry observationRegistry() {
+        return ObservationRegistry.create();
     }
 }

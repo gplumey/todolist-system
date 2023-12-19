@@ -1,5 +1,6 @@
 package org.gplumey.todolist.domain.service.impl;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.AllArgsConstructor;
 import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
+@Observed
 public class GetTodoUsecaseImpl implements UseCases.Queries.GetTodoUsecase {
 
     private final TodolistReadRepository repository;
