@@ -103,7 +103,18 @@
     </dependencyManagement>
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.github.ferstl</groupId>
+                <artifactId>depgraph-maven-plugin</artifactId>
+                <version>4.0.2</version>
+                <configuration>
+                    <includes>org.gplumey:*</includes>
+                    <excludes>org.gplumey:jacoco-report-aggregate</excludes>
+                    <createImage>true</createImage>
 
+
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
