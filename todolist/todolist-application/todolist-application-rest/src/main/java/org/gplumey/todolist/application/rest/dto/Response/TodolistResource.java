@@ -1,8 +1,9 @@
-package org.gplumey.todolist.application.rest.dto;
+package org.gplumey.todolist.application.rest.dto.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.gplumey.todolist.application.rest.TodoRestController;
 import org.gplumey.todolist.application.rest.TodolistRestController;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.springframework.hateoas.RepresentationModel;
@@ -28,7 +29,7 @@ public class TodolistResource extends RepresentationModel<TodolistResource> {
                                                .build();
 
         dto.add(linkTo(methodOn(TodolistRestController.class).get(domain.getId().getValue())).withSelfRel());
-        dto.add(linkTo(methodOn(TodolistRestController.class).postTodo(domain.getId().getValue(), null)).withRel("add-task"));
+        dto.add(linkTo(methodOn(TodoRestController.class).post(domain.getId().getValue(), null)).withRel("add-task"));
 
         return dto;
     }

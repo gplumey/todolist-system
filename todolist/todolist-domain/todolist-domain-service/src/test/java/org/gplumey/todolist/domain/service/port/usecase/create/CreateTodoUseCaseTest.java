@@ -6,8 +6,8 @@ import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
 import org.gplumey.todolist.domain.core.execption.TodolistNotFoundException;
-import org.gplumey.todolist.domain.service.port.input.AddTodoUseCase;
-import org.gplumey.todolist.domain.service.port.input.command.AddTodoCommand;
+import org.gplumey.todolist.domain.service.port.input.CreateTodoUseCase;
+import org.gplumey.todolist.domain.service.port.input.command.CreateTodoCommand;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,11 +31,11 @@ import static org.mockito.Mockito.*;
 
 
 @SpringBootTest
-class AddTodoUseCaseTest {
+class CreateTodoUseCaseTest {
 
 
     @Autowired
-    AddTodoUseCase useCase;
+    CreateTodoUseCase useCase;
 
     @Autowired
     TodolistWriteRepository writeRepository;
@@ -60,14 +60,14 @@ class AddTodoUseCaseTest {
     @ParameterizedTest
     @MethodSource
     void should_add_todo_given_valid_request(String name) {
-        Todo task = useCase.execute(new AddTodoCommand(todolistId, name));
+        Todo task = useCase.execute(new CreateTodoCommand(todolistId, name));
         assertEquals(name, task.getLabel().getValue());
         verify(writeRepository).save(any());
     }
 
     @Test
     void should_fail_when_name_is_null() {
-        Executable exec = () -> useCase.execute(new AddTodoCommand(todolistId, null));
+        Executable exec = () -> useCase.execute(new CreateTodoCommand(todolistId, null));
         Throwable thrown = assertThrows(ConstraintViolationException.class, exec);
         assertEquals("label: must not be blank", thrown.getMessage());
         verify(writeRepository, never()).save(any());
@@ -75,7 +75,7 @@ class AddTodoUseCaseTest {
 
     @Test
     void should_fail_when_todolist_not_found() {
-        Executable exec = () -> useCase.execute(new AddTodoCommand(TodolistId.of("57106e00-71e6-4cee-8f56-edec23eddbef"), "task name"));
+        Executable exec = () -> useCase.execute(new CreateTodoCommand(TodolistId.of("57106e00-71e6-4cee-8f56-edec23eddbef"), "task name"));
         Throwable thrown = assertThrows(TodolistNotFoundException.class, exec);
         assertEquals("Todolist 57106e00-71e6-4cee-8f56-edec23eddbef cannot be found.", thrown.getMessage());
         verify(writeRepository, never()).save(any());

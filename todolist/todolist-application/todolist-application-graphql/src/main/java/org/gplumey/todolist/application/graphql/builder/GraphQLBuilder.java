@@ -6,7 +6,7 @@ import org.gplumey.todolist.application.graphql.schema.generated.TodolistGraphQL
 import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 
-public class GraphDtoBuilder {
+public class GraphQLBuilder {
 
     public static TodolistGraphQL of(Todolist entity, DataFetchingFieldSelectionSet selectionSet) {
         var dto = new TodolistGraphQL();

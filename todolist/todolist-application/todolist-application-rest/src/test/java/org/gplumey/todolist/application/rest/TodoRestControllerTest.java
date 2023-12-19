@@ -1,11 +1,10 @@
 package org.gplumey.todolist.application.rest;
 
-import org.gplumey.todolist.application.rest.dto.AddTodoDto;
+import org.gplumey.todolist.application.rest.dto.request.CreateTodoDto;
 import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
-import org.gplumey.todolist.domain.service.port.input.command.CreateTodolistCommand;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -25,7 +22,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class TodolistControllerTest {
+class TodoRestControllerTest {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -39,46 +36,6 @@ class TodolistControllerTest {
     void setup() {
         reset(readRepository, writeRepository);
         when(writeRepository.save(any())).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
-    }
-
-    @Test
-    void list() throws Exception {
-        String defaultTodoListName = "Default todolist";
-        Collection<Todolist> mockData = List.of(Todolist.builder().id(TodolistId.create()).name(TodolistName.of(defaultTodoListName)).build());
-        when(readRepository.findAll()).thenReturn(mockData);
-        webTestClient.get().uri("/todolist").exchange().expectStatus().isOk()
-                     .expectBody().jsonPath("$.length()").isEqualTo(1)
-                     .jsonPath("$[0].name").isEqualTo(defaultTodoListName);
-    }
-
-    @Test
-    void should_return_problemDetail_on_IllegalStateException() {
-        CreateTodolistCommand command = new CreateTodolistCommand(null);
-        webTestClient.post()
-                     .uri("/todolist")
-                     .body(Mono.just(command), CreateTodolistCommand.class)
-                     .exchange()
-                     .expectStatus()
-                     .isEqualTo(HttpStatus.BAD_REQUEST.value())
-                     .expectBody()
-                     .jsonPath("$.detail")
-                     .isEqualTo("name: must not be blank");
-    }
-
-    @Test
-    void should_return_create_todolist() {
-        CreateTodolistCommand command = new CreateTodolistCommand("My todolist");
-        webTestClient.post()
-                     .uri("/todolist")
-                     .body(Mono.just(command), CreateTodolistCommand.class)
-                     .exchange()
-                     .expectStatus()
-                     .isEqualTo(HttpStatus.OK.value())
-                     .expectBody()
-                     .jsonPath("$.name")
-                     .isEqualTo("My todolist")
-                     .jsonPath("$.id")
-                     .isNotEmpty();
     }
 
 
@@ -100,13 +57,13 @@ class TodolistControllerTest {
 
 
     @Test
-    void should_add_todo() {
+    void should_create_todo() {
         Todolist todolist = Todolist.builder().id(TodolistId.create()).name(TodolistName.of("test todolist")).build();
-        var newTask = new AddTodoDto("my new todo");
+        var newTodo = new CreateTodoDto("my new todo");
         when(readRepository.get(any())).thenReturn(Optional.of(todolist));
         webTestClient.post()
                      .uri("/todolist/" + todolist.getId().getValue() + "/todo")
-                     .body(Mono.just(newTask), AddTodoDto.class)
+                     .body(Mono.just(newTodo), CreateTodoDto.class)
                      .exchange()
                      .expectStatus()
                      .isEqualTo(HttpStatus.OK.value())
@@ -115,21 +72,5 @@ class TodolistControllerTest {
                      .isEqualTo("my new todo")
                      .jsonPath("$.id")
                      .isNotEmpty();
-        ;
-    }
-
-
-    @Test
-    void should_get_todolist() {
-        Todolist todolist = Todolist.builder().id(TodolistId.create()).name(TodolistName.of("test todolist")).build();
-        when(readRepository.get(any())).thenReturn(Optional.of(todolist));
-        webTestClient.get()
-                     .uri("/todolist/" + todolist.getId().getValue())
-                     .exchange()
-                     .expectStatus()
-                     .isEqualTo(HttpStatus.OK.value())
-                     .expectBody()
-                     .jsonPath("$.name")
-                     .isEqualTo("test todolist");
     }
 }

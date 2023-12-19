@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>repost-aggregate</artifactId>
+    <artifactId>jacoco-report-aggregate</artifactId>
     <properties>
         <code.coverage.project.folder>${basedir}/../</code.coverage.project.folder>
         <code.coverage.overall.data.folder>${basedir}/target/</code.coverage.overall.data.folder>
@@ -18,15 +18,15 @@
     <dependencies>
         <dependency>
             <groupId>org.gplumey</groupId>
-            <artifactId>todolist-container</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.gplumey</groupId>
-            <artifactId>todolist-dataaccess</artifactId>
+            <artifactId>todolist-infra-data</artifactId>
         </dependency>
         <dependency>
             <groupId>org.gplumey</groupId>
             <artifactId>todolist-application-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.gplumey</groupId>
+            <artifactId>todolist-application-graphql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.gplumey</groupId>
