@@ -4,6 +4,7 @@ import org.gplumey.todolist.application.graphql.schema.generated.TodolistGraphQL
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
+import org.gplumey.todolist.domain.service.port.output.TodolistEventPublisher;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.junit.jupiter.api.Assertions;
@@ -31,9 +32,11 @@ class TodolistGraphQLControllerTest {
     WebApplicationContext
             context;
     @MockBean
-    private TodolistWriteRepository writeRepository;
+    TodolistEventPublisher todolistEventPublisher;
     @MockBean
-    private TodolistReadRepository readRepository;
+    TodolistWriteRepository writeRepository;
+    @MockBean
+    TodolistReadRepository readRepository;
     private GraphQlTester tester;
 
     @BeforeEach

@@ -1,6 +1,7 @@
 package org.gplumey.todolist.application;
 
 import io.micrometer.observation.ObservationRegistry;
+import org.gplumey.todolist.domain.service.port.output.TodolistEventPublisher;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.mockito.Mockito;
@@ -27,6 +28,11 @@ public class TestApplication {
     @Bean
     TodolistWriteRepository todolistWriteRepository() {
         return Mockito.mock(TodolistWriteRepository.class);
+    }
+
+    @Bean
+    TodolistEventPublisher todolistEventPublisher() {
+        return Mockito.mock(TodolistEventPublisher.class);
     }
 
     @Bean

@@ -8,6 +8,9 @@ import org.gplumey.todolist.domain.core.entity.valueobject.TodoId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodoLabel;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
+import org.gplumey.todolist.domain.core.event.TodoCreatedEvent;
+import org.gplumey.todolist.domain.core.event.TodoListCreatedEvent;
+import org.gplumey.todolist.domain.core.event.TodolistEvent;
 import org.gplumey.todolist.domain.core.execption.TodoLimitExceededTodolistException;
 
 import java.util.Collection;
@@ -17,11 +20,11 @@ import java.util.List;
 
 
 @Getter
-public class Todolist extends AggregateRoot<TodolistId> {
+public class Todolist extends AggregateRoot<TodolistId, TodolistEvent> {
 
     private static final int MAX_TODO_COUNT = 100;
-    private TodolistName name;
-    private List<Todo> todos;
+    private final TodolistName name;
+    private final List<Todo> todos;
 
     @Builder
     public Todolist(TodolistId id, TodolistName name, List<Todo> todos) {
@@ -31,10 +34,12 @@ public class Todolist extends AggregateRoot<TodolistId> {
     }
 
     public static Todolist create(String name) {
-        return Todolist.builder()
-                       .id(TodolistId.create())
-                       .name(TodolistName.of(name))
-                       .build();
+        Todolist newTodolist = Todolist.builder()
+                                       .id(TodolistId.create())
+                                       .name(TodolistName.of(name))
+                                       .build();
+        newTodolist.addDomainEvent(new TodoListCreatedEvent(newTodolist));
+        return newTodolist;
     }
 
     public Todo addTodo(String label) {
@@ -47,6 +52,7 @@ public class Todolist extends AggregateRoot<TodolistId> {
                            .label(TodoLabel.of(label))
                            .build();
         todos.add(newTodo);
+        this.addDomainEvent(new TodoCreatedEvent(this, newTodo));
         return newTodo;
     }
 

@@ -1,10 +1,12 @@
 package org.gplumey.todolist.domain.service.port.usecase.create;
 
 import jakarta.validation.ConstraintViolationException;
+import org.gplumey.common.domain.core.eventing.DomainEventPublisher;
 import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
+import org.gplumey.todolist.domain.core.event.TodoCreatedEvent;
 import org.gplumey.todolist.domain.core.execption.TodolistNotFoundException;
 import org.gplumey.todolist.domain.service.port.input.UseCases;
 import org.gplumey.todolist.domain.service.port.input.command.CreateTodoCommand;
@@ -18,6 +20,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
@@ -43,6 +46,10 @@ class CreateTodoUseCaseTest {
     @Autowired
     TodolistReadRepository readRepository;
 
+
+    @MockBean
+    DomainEventPublisher eventPublisher;
+
     String TODOLIST_UUID = "095d6c0c-69bc-48f8-b139-d3e06194cdc5";
     TodolistId todolistId = TodolistId.of(TODOLIST_UUID);
     Todolist todolist = Todolist.builder().id(todolistId).name(TodolistName.of("Test todolist")).build();
@@ -65,6 +72,7 @@ class CreateTodoUseCaseTest {
         Todo task = useCase.execute(createTodoCommandAdaptor(TODOLIST_UUID, name));
         assertEquals(name, task.getLabel().getValue());
         verify(writeRepository).save(any());
+        verify(eventPublisher).publishDomainEvent(any(TodoCreatedEvent.class));
     }
 
     @Test

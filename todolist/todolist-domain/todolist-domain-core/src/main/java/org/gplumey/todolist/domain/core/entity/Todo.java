@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Todo extends BaseEntity<TodoId> {
 
     private final TodolistId todolistId;
-    private TodoLabel label;
+    private final TodoLabel label;
 
 
     @Builder

@@ -4,16 +4,39 @@
   "name": "TodolistAvroModel",
   "fields": [
     {
-      "name": "id",
+      "name": "todolist",
+      "type": {
+        "type": "record",
+        "name": "TodolistAvro",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "type": "string",
+              "logicalType": "uuid"
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "sagaId",
       "type": {
         "type": "string",
         "logicalType": "uuid"
       }
     },
     {
-      "name": "name",
+      "name": "createdAt",
       "type": {
-        "type": "string"
+        "type": "long",
+        "logicalType": "timestamp-millis"
       }
     }
   ]

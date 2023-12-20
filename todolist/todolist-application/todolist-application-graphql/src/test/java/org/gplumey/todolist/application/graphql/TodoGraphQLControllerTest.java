@@ -4,6 +4,7 @@ import org.gplumey.todolist.application.graphql.schema.generated.TodoGraphQL;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
+import org.gplumey.todolist.domain.service.port.output.TodolistEventPublisher;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.hamcrest.MatcherAssert;
@@ -31,6 +32,8 @@ class TodoGraphQLControllerTest {
     @Autowired
     WebApplicationContext
             context;
+    @MockBean
+    TodolistEventPublisher todolistEventPublisher;
     @MockBean
     private TodolistWriteRepository writeRepository;
     @MockBean

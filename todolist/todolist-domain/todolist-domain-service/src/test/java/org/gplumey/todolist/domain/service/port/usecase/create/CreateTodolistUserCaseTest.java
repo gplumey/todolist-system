@@ -1,7 +1,9 @@
 package org.gplumey.todolist.domain.service.port.usecase.create;
 
 import jakarta.validation.ConstraintViolationException;
+import org.gplumey.common.domain.core.eventing.DomainEventPublisher;
 import org.gplumey.todolist.domain.core.entity.Todolist;
+import org.gplumey.todolist.domain.core.event.TodoListCreatedEvent;
 import org.gplumey.todolist.domain.service.port.input.UseCases;
 import org.gplumey.todolist.domain.service.port.input.command.CreateTodolistCommand;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
@@ -13,6 +15,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
@@ -34,6 +37,9 @@ class CreateTodolistUserCaseTest {
     @Autowired
     TodolistWriteRepository todolistRepository;
 
+    @MockBean
+    DomainEventPublisher eventPublisher;
+
     private static Stream<Arguments> should_create_todolist_given_valid_request() {
         return Stream.of(Arguments.of("My first todolist"));
     }
@@ -51,6 +57,7 @@ class CreateTodolistUserCaseTest {
         Todolist todolist = createTodolistUserCase.execute(createTodolistCommandAdaptor(name));
         assertEquals(name, todolist.getName().getValue());
         verify(todolistRepository).save(any());
+        verify(eventPublisher).publishDomainEvent(any(TodoListCreatedEvent.class));
     }
 
     @Test
@@ -59,6 +66,7 @@ class CreateTodolistUserCaseTest {
         Throwable thrown = assertThrows(ConstraintViolationException.class, exec);
         assertEquals("name: must not be blank", thrown.getMessage());
         verify(todolistRepository, never()).save(any());
+        verify(eventPublisher, never()).publishDomainEvent(any());
     }
 
     private CreateTodolistCommand createTodolistCommandAdaptor(String name) {

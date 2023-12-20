@@ -24,8 +24,15 @@ public class Assert {
         return value;
     }
 
+    public static <T> T notNull(T value, String message) {
+        if (value == null) {
+            throw new IllegalStateException(message);
+        }
+        return value;
+    }
+
 
     private static String nullSafeGet(Supplier<String> messageSupplier) {
-        return messageSupplier != null ? (String) messageSupplier.get() : null;
+        return messageSupplier != null ? messageSupplier.get() : null;
     }
 }

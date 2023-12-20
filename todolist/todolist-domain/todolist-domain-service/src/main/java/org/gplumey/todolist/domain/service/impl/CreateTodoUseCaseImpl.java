@@ -2,6 +2,7 @@ package org.gplumey.todolist.domain.service.impl;
 
 import io.micrometer.observation.annotation.Observed;
 import lombok.AllArgsConstructor;
+import org.gplumey.common.domain.core.eventing.DomainEventPublisher;
 import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Observed
 public class CreateTodoUseCaseImpl implements UseCases.Commands.CreateTodoUseCase {
-
+    private final DomainEventPublisher publisher;
     private final TodolistWriteRepository writeRepository;
     private final TodolistReadRepository readRepository;
 
@@ -30,6 +31,7 @@ public class CreateTodoUseCaseImpl implements UseCases.Commands.CreateTodoUseCas
         Todolist todolist = readRepository.get(todolistId).orElseThrow(() -> new TodolistNotFoundException(todolistId));
         Todo todo = todolist.addTodo(addTodoCommand.getLabel());
         writeRepository.save(todolist);
+        todolist.publishDomainEvents(publisher);
         return todo;
     }
 }
