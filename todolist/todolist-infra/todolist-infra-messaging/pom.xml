@@ -37,10 +37,26 @@
                             <goal>schema</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>src/main/resources/avro</sourceDirectory>
+                            <imports>
+                                <import>${project.basedir}/src/main/resources/avro/todo.avsc</import>
+                                <import>${project.basedir}/src/main/resources/avro/todolist.avsc</import>
+                                <import>${project.basedir}/src/main/resources/avro/event-header.avsc</import>
+                                <import>${project.basedir}/src/main/resources/avro/todolist-created-event.avsc</import>
+                                <import>${project.basedir}/src/main/resources/avro/todo-created-event.avsc</import>
+                                <import>${project.basedir}/src/main/resources/avro/todo-completed-event.avsc</import>
+                            </imports>
+                            <sourceDirectory>${project.basedir}/src/main/resources/avro</sourceDirectory>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

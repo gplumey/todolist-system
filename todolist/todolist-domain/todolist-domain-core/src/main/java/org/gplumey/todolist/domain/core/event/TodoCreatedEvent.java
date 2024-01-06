@@ -12,8 +12,17 @@ public class TodoCreatedEvent extends TodolistEvent {
         this.todo = newTodo;
     }
 
+    public Todo getTodo() {
+        return todo;
+    }
+
     @Override
     public EventType getEventType() {
-        return TodolistEventType.TODO_CREATE;
+        return Types.TODO_CREATE;
+    }
+
+    @Override
+    public DispathMode getDispathMode() {
+        return DispathMode.NON_TRANSACTIONAL;
     }
 }

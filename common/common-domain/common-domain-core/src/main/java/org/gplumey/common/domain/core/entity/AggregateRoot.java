@@ -1,7 +1,7 @@
 package org.gplumey.common.domain.core.entity;
 
 import org.gplumey.common.domain.core.eventing.DomainEvent;
-import org.gplumey.common.domain.core.eventing.DomainEventPublisher;
+import org.gplumey.common.domain.core.eventing.DomainEventDispatcher;
 
 import java.util.LinkedList;
 import java.util.Optional;
@@ -19,8 +19,8 @@ public class AggregateRoot<T, E extends DomainEvent> extends BaseEntity<T> {
         return this;
     }
 
-    public void publishDomainEvents(DomainEventPublisher publisher) {
-        Optional.of(domainEvents).ifPresent(events -> events.forEach(publisher::publishDomainEvent));
+    public void fireEvents(DomainEventDispatcher dispatcher) {
+        Optional.of(domainEvents).ifPresent(events -> events.forEach(dispatcher::dispatch));
         domainEvents.clear();
     }
 }

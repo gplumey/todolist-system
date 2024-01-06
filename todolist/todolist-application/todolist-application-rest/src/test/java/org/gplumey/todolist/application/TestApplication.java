@@ -1,10 +1,12 @@
 package org.gplumey.todolist.application;
 
 import io.micrometer.observation.ObservationRegistry;
-import org.gplumey.todolist.domain.service.port.output.TodolistEventPublisher;
+import org.gplumey.todolist.domain.service.eventing.DomainEventPublisher;
+import org.gplumey.todolist.domain.service.outbox.OutboxMessageRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +14,8 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import java.util.Locale;
+
+import static org.mockito.Mockito.mock;
 
 @SpringBootApplication(scanBasePackages = "org.gplumey.todolist")
 public class TestApplication {
@@ -31,8 +35,14 @@ public class TestApplication {
     }
 
     @Bean
-    TodolistEventPublisher todolistEventPublisher() {
-        return Mockito.mock(TodolistEventPublisher.class);
+    @Qualifier(DomainEventPublisher.BROKER)
+    DomainEventPublisher domainEventPublisher() {
+        return Mockito.mock(DomainEventPublisher.class);
+    }
+
+    @Bean
+    OutboxMessageRepository outboxMessageRepository() {
+        return mock(OutboxMessageRepository.class);
     }
 
     @Bean

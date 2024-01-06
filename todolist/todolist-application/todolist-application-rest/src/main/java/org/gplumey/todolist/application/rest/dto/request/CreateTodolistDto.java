@@ -5,11 +5,6 @@ import org.gplumey.todolist.domain.service.port.input.command.CreateTodolistComm
 public record CreateTodolistDto(String name) {
 
     public static CreateTodolistCommand adaptor(CreateTodolistDto dto) {
-        return new CreateTodolistCommand() {
-            @Override
-            public String getName() {
-                return dto.name();
-            }
-        };
+        return () -> dto.name();
     }
 }

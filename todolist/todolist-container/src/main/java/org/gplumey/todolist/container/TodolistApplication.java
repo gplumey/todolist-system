@@ -14,6 +14,7 @@ import org.gplumey.todolist.container.observability.AbstractObserveAroundMethodH
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,6 +24,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @SpringBootApplication(scanBasePackages = "org.gplumey.todolist")
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableScheduling
+
 public class TodolistApplication {
 
     public static void main(String[] args) {
@@ -32,7 +35,7 @@ public class TodolistApplication {
     @Bean
     public OpenAPI usersMicroserviceOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("Your API 2 Title")
+                .info(new Info().title("Your API Title")
                                 .description("Your API Description")
                                 .version("1.0"));
     }

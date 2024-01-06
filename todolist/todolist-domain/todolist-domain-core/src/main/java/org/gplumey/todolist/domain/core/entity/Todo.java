@@ -16,7 +16,6 @@ public class Todo extends BaseEntity<TodoId> {
     private final TodolistId todolistId;
     private final TodoLabel label;
 
-
     @Builder
     public Todo(TodolistId todolistId, TodoId id, TodoLabel label) {
         super(id);

@@ -1,23 +1,23 @@
 {
   "namespace": "org.gplumey.todolist.infra.messaging.avro.model",
   "type": "record",
-  "name": "TodolistAvro",
+  "name": "TodoAvro",
   "fields": [
     {
       "name": "id",
       "type": "string"
     },
     {
-      "name": "name",
+      "name": "label",
       "type": "string"
     },
     {
-      "name": "todos",
-      "type": {
-        "type": "array",
-        "items": "TodoAvro"
-      },
-      "default": []
+      "name": "todolistId",
+      "type": [
+        "string",
+        "null"
+      ],
+      "default": "null"
     }
   ]
 }

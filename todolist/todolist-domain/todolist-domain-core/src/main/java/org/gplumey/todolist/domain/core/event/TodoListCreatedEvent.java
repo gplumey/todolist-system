@@ -9,6 +9,11 @@ public class TodoListCreatedEvent extends TodolistEvent {
 
     @Override
     public EventType getEventType() {
-        return TodolistEventType.TODOLIST_CREATE;
+        return Types.TODOLIST_CREATE;
+    }
+
+    @Override
+    public DispathMode getDispathMode() {
+        return DispathMode.TRANSACTIONAL;
     }
 }
