@@ -41,7 +41,7 @@ class GetTodolistUseCaseTest {
     void setup() {
         reset(readRepository);
         LocaleContextHolder.setLocale(Locale.US);
-        when(readRepository.get(todolistId)).thenReturn(Optional.of(todolist));
+        when(readRepository.findById(todolistId)).thenReturn(Optional.of(todolist));
     }
 
     @Test

@@ -66,7 +66,7 @@ class TodoGraphQLControllerTest {
                                .id(TodolistId.of("aa876b9b-1400-49dd-9c56-e594679949e6"))
                                .name(TodolistName.of(defaultTodoListName))
                                .build();
-        when(readRepository.get(any())).thenReturn(Optional.of(mockData));
+        when(readRepository.findById(any())).thenReturn(Optional.of(mockData));
         String document = "mutation {\n" +
                 "    createTodo (createTodoInput: {\n" +
                 "        todolistId: \"aa876b9b-1400-49dd-9c56-e594679949e6\"\n" +

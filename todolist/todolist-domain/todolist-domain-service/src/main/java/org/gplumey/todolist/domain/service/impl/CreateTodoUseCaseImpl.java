@@ -28,7 +28,7 @@ public class CreateTodoUseCaseImpl implements UseCases.Commands.CreateTodoUseCas
     public Todo execute(CreateTodoCommand addTodoCommand) {
         validator.validate(addTodoCommand);
         TodolistId todolistId = addTodoCommand.getTodolistId();
-        Todolist todolist = readRepository.get(todolistId).orElseThrow(() -> new TodolistNotFoundException(todolistId));
+        Todolist todolist = readRepository.findById(todolistId).orElseThrow(() -> new TodolistNotFoundException(todolistId));
         Todo todo = todolist.addTodo(addTodoCommand.getLabel());
         writeRepository.save(todolist);
         todolist.fireEvents(dispatcher);

@@ -43,7 +43,7 @@ class TodoRestControllerTest {
         Todolist todolist = Todolist.builder().id(TodolistId.create()).name(TodolistName.of("test todolist")).build();
         todolist.addTodo("todo 1");
         Todo todo2 = todolist.addTodo("todo 2");
-        when(readRepository.get(any())).thenReturn(Optional.of(todolist));
+        when(readRepository.findById(any())).thenReturn(Optional.of(todolist));
         webTestClient.get()
                      .uri("/todolist/" + todolist.getId().getValue() + "/todo/" + todo2.getId().getValue())
                      .exchange()
@@ -59,7 +59,7 @@ class TodoRestControllerTest {
     void should_create_todo() {
         Todolist todolist = Todolist.builder().id(TodolistId.create()).name(TodolistName.of("test todolist")).build();
         var newTodo = new CreateTodoDto("my new todo");
-        when(readRepository.get(any())).thenReturn(Optional.of(todolist));
+        when(readRepository.findById(any())).thenReturn(Optional.of(todolist));
         webTestClient.post()
                      .uri("/todolist/" + todolist.getId().getValue() + "/todo")
                      .bodyValue(newTodo)

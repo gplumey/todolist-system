@@ -26,7 +26,7 @@ public class GetTodoUsecaseImpl implements UseCases.Queries.GetTodoUsecase {
     public Todo request(GetTodoQuery query) {
         validator.validate(query);
         TodolistId todolistId = query.todolistId();
-        Todolist todolist = repository.get(todolistId).orElseThrow(() -> new TodolistNotFoundException(query.todolistId()));
+        Todolist todolist = repository.findById(todolistId).orElseThrow(() -> new TodolistNotFoundException(query.todolistId()));
         return todolist.getTodos()
                        .stream()
                        .filter(t -> t.getId().equals(query.todoId()))

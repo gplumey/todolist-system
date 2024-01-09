@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 
 import static org.mockito.Mockito.mock;
 
-@SpringBootApplication()
+@SpringBootApplication
 public class TestApplication {
 
     public static void main(String[] args) {
@@ -55,7 +55,7 @@ public class TestApplication {
     }
 
     @Bean
-    ApplicationEventPublisher eventPublisher() {
+    ApplicationEventPublisher applicationEventPublisher() {
         return mock(ApplicationEventPublisher.class);
     }
 }
