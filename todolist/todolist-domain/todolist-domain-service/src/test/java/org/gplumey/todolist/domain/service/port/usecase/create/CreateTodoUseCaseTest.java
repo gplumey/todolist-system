@@ -64,7 +64,7 @@ class CreateTodoUseCaseTest {
         reset(writeRepository, readRepository);
         LocaleContextHolder.setLocale(Locale.US);
         when(writeRepository.save(any())).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
-        when(readRepository.get(todolistId)).thenReturn(Optional.of(todolist));
+        when(readRepository.findById(todolistId)).thenReturn(Optional.of(todolist));
     }
 
     @ParameterizedTest

@@ -95,7 +95,7 @@ class TodolistRestControllerTest {
     @Test
     void should_get_one_by_id() {
         Todolist todolist = Todolist.builder().id(TodolistId.create()).name(TodolistName.of("test todolist")).build();
-        when(readRepository.get(any())).thenReturn(Optional.of(todolist));
+        when(readRepository.findById(any())).thenReturn(Optional.of(todolist));
         get(todolist.getId(), HttpStatus.OK).jsonPath("$.name").isEqualTo("test todolist");
     }
 }

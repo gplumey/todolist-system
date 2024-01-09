@@ -1,6 +1,7 @@
 Feature: Create todo
 
-  Scenario: Say hello
+  Scenario: Create todo in default todolist
     Given Only default todolist exists
-    When create "my first todo list"
-    Then todolist get created
+    When create todo "my first todo list" in default todolist
+    Then todo get created
+    And "Todo Created" event occurs

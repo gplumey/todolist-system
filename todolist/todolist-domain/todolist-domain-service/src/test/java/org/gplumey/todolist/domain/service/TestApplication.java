@@ -55,7 +55,7 @@ public class TestApplication {
     }
 
     @Bean
-    ApplicationEventPublisher eventPublisher() {
+    ApplicationEventPublisher applicationEventPublisher() {
         return mock(ApplicationEventPublisher.class);
     }
 }
