@@ -7,3 +7,15 @@ spring:
   graphql:
     graphiql:
       enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    shutdown:
+      enabled: true
+    info:
+      enabled: true
+    prometheus:
+      enabled:

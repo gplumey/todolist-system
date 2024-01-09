@@ -1,8 +1,9 @@
-package org.gplumey.todolist.domain.service.port.input;
+package org.gplumey.todolist.domain.service.impl;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.AllArgsConstructor;
-import org.gplumey.common.domain.core.usecase.QueryHandler;
 import org.gplumey.todolist.domain.core.entity.Todolist;
+import org.gplumey.todolist.domain.service.port.input.UseCases;
 import org.gplumey.todolist.domain.service.port.input.query.GetAllTodolistQuery;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,8 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @Component
-public class GetAllTodolistUseCase implements QueryHandler<Collection<Todolist>, GetAllTodolistQuery> {
+@Observed
+public class GetAllTodolistUseCaseImpl implements UseCases.Queries.GetAllTodolistUseCase {
 
     private final TodolistReadRepository repository;
 

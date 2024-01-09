@@ -12,7 +12,7 @@ public class TodolistId extends BaseId<UUID> {
     public static TodolistId of(String uuid) {
         return new TodolistId(UUID.fromString(uuid));
     }
-
+    
     public static TodolistId of(UUID uuid) {
         return new TodolistId(uuid);
     }

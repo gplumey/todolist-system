@@ -22,9 +22,10 @@ public class TodoResource extends RepresentationModel<TodolistResource> {
 
     public static TodoResource of(Todo todo) {
         TodoResource dto = TodoResource.builder().id(todo.getId().getValue()).label(todo.getLabel().getValue()).build();
+
         dto.add(linkTo(methodOn(TodoRestController.class).get(todo.getTodolistId().getValue(),
                 todo.getId().getValue())).withSelfRel());
-        dto.add(linkTo(methodOn(TodolistRestController.class).get(todo.getTodolistId().getValue())).withRel("todolist"));
+        dto.add(linkTo(methodOn(TodolistRestController.class).getById(todo.getTodolistId().getValue())).withRel("todolist"));
         return dto;
     }
 }

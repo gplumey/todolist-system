@@ -1,0 +1,34 @@
+{
+  "namespace": "org.gplumey.todolist.infra.messaging.avro.model",
+  "type": "record",
+  "name": "EventHeaderAvro",
+  "fields": [
+    {
+      "name": "eventName",
+      "type": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "sagaId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "createdAt",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}

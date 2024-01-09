@@ -1,0 +1,15 @@
+{
+  "namespace": "org.gplumey.todolist.infra.messaging.avro.model",
+  "type": "record",
+  "name": "TodolistCreatedEventAvro",
+  "fields": [
+    {
+      "name": "todolist",
+      "type": "TodolistAvro"
+    },
+    {
+      "name": "header",
+      "type": "EventHeaderAvro"
+    }
+  ]
+}

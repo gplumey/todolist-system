@@ -1,5 +1,7 @@
 package org.gplumey.todolist.application;
 
+import io.micrometer.observation.ObservationRegistry;
+import org.gplumey.todolist.domain.service.outbox.OutboxMessageRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.mockito.Mockito;
@@ -11,6 +13,8 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import java.util.Locale;
+
+import static org.mockito.Mockito.mock;
 
 
 @SpringBootApplication(scanBasePackages = "org.gplumey.todolist")
@@ -33,9 +37,19 @@ public class TestApplication {
     }
 
     @Bean
+    OutboxMessageRepository outboxMessageRepository() {
+        return mock(OutboxMessageRepository.class);
+    }
+
+    @Bean
     public LocaleResolver localeResolver() {
         AcceptHeaderLocaleResolver slr = new AcceptHeaderLocaleResolver();
         slr.setDefaultLocale(Locale.US);
         return slr;
+    }
+
+    @Bean
+    ObservationRegistry observationRegistry() {
+        return ObservationRegistry.create();
     }
 }

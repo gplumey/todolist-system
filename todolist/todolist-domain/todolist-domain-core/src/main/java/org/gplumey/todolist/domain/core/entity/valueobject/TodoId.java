@@ -16,4 +16,8 @@ public class TodoId extends BaseId<UUID> {
     public static TodoId of(UUID uuid) {
         return new TodoId(uuid);
     }
+
+    public static TodoId of(String uuid) {
+        return new TodoId(UUID.fromString(uuid));
+    }
 }

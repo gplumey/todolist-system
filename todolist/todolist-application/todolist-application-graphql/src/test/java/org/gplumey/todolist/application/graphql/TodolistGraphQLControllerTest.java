@@ -4,6 +4,8 @@ import org.gplumey.todolist.application.graphql.schema.generated.TodolistGraphQL
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
+import org.gplumey.todolist.domain.service.eventing.DomainEventPublisher;
+import org.gplumey.todolist.domain.service.outbox.OutboxMessageRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.junit.jupiter.api.Assertions;
@@ -30,15 +32,21 @@ class TodolistGraphQLControllerTest {
     @Autowired
     WebApplicationContext
             context;
+    @MockBean(name = DomainEventPublisher.BROKER)
+    DomainEventPublisher domainEventPublisher;
     @MockBean
-    private TodolistWriteRepository writeRepository;
+    TodolistWriteRepository writeRepository;
     @MockBean
-    private TodolistReadRepository readRepository;
+    TodolistReadRepository readRepository;
+
+    @MockBean
+    OutboxMessageRepository outboxMessageRepository;
+
     private GraphQlTester tester;
 
     @BeforeEach
     void setup() {
-        reset(readRepository, writeRepository);
+        reset(readRepository, writeRepository, outboxMessageRepository, domainEventPublisher);
         when(writeRepository.save(any())).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
 
         WebTestClient client =

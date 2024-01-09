@@ -4,6 +4,8 @@ import org.gplumey.todolist.application.graphql.schema.generated.TodoGraphQL;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
+import org.gplumey.todolist.domain.service.eventing.DomainEventPublisher;
+import org.gplumey.todolist.domain.service.outbox.OutboxMessageRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.hamcrest.MatcherAssert;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
@@ -31,15 +34,20 @@ class TodoGraphQLControllerTest {
     @Autowired
     WebApplicationContext
             context;
+    @MockBean(name = DomainEventPublisher.BROKER)
+    @Qualifier(DomainEventPublisher.BROKER)
+    DomainEventPublisher domainEventPublisher;
     @MockBean
-    private TodolistWriteRepository writeRepository;
+    OutboxMessageRepository outboxMessageRepository;
     @MockBean
-    private TodolistReadRepository readRepository;
-    private GraphQlTester tester;
+    TodolistWriteRepository writeRepository;
+    @MockBean
+    TodolistReadRepository readRepository;
+    GraphQlTester tester;
 
     @BeforeEach
     void setup() {
-        reset(readRepository, writeRepository);
+        reset(readRepository, writeRepository, domainEventPublisher, outboxMessageRepository);
         when(writeRepository.save(any())).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
 
         WebTestClient client =

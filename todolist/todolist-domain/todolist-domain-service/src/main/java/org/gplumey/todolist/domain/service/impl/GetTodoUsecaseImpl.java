@@ -1,12 +1,13 @@
-package org.gplumey.todolist.domain.service.port.input;
+package org.gplumey.todolist.domain.service.impl;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.AllArgsConstructor;
-import org.gplumey.common.domain.core.usecase.QueryHandler;
 import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.execption.TodoNotFoundException;
 import org.gplumey.todolist.domain.core.execption.TodolistNotFoundException;
+import org.gplumey.todolist.domain.service.port.input.UseCases;
 import org.gplumey.todolist.domain.service.port.input.query.GetTodoQuery;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.validation.UsecaseValidator;
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class GetTodoUsecase implements QueryHandler<Todo, GetTodoQuery> {
+@Observed
+public class GetTodoUsecaseImpl implements UseCases.Queries.GetTodoUsecase {
 
     private final TodolistReadRepository repository;
     private final UsecaseValidator validator;
