@@ -46,7 +46,7 @@ public class TodolistApplication {
                 authorize.
                         requestMatchers("/**").permitAll()
                         .anyRequest().authenticated());
-        http.cors().disable();
+        //http.cors().disable();
         http.csrf().disable();
         http.headers().httpStrictTransportSecurity().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -4,8 +4,8 @@
   "name": "TodolistDeletedEventAvro",
   "fields": [
     {
-      "name": "todo",
-      "type": "TodoAvro"
+      "name": "todolist",
+      "type": "TodolistAvro"
     },
     {
       "name": "header",

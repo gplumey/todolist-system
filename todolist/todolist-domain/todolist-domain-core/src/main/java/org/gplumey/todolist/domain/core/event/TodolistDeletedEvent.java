@@ -1,24 +1,17 @@
 package org.gplumey.todolist.domain.core.event;
 
-import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 
-public class TodoDeletedEvent extends TodolistEvent {
+public class TodolistDeletedEvent extends TodolistEvent {
 
-    private final Todo todo;
 
-    public TodoDeletedEvent(Todolist source, Todo newTodo) {
+    public TodolistDeletedEvent(Todolist source) {
         super(source);
-        this.todo = newTodo;
-    }
-
-    public Todo getTodo() {
-        return todo;
     }
 
     @Override
     public EventType getEventType() {
-        return Types.TODO_CREATE;
+        return Types.TODOLIST_DELETE;
     }
 
     @Override

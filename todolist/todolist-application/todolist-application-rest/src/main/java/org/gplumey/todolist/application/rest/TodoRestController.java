@@ -16,6 +16,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/todolist/{todolistId}/todo")
 @AllArgsConstructor
+@CrossOrigin//(origins = "http://localhost:5173")
 public class TodoRestController {
 
     private final UseCases.Queries.GetTodoUsecase getTodoUsecase;

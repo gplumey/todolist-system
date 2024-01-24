@@ -53,7 +53,7 @@ class CreateTodolistUserCaseTest {
     @MethodSource
     void should_create_todolist_given_valid_request(String name) {
         Todolist todolist = createTodolistUserCase.execute(createTodolistCommandAdaptor(name));
-        assertEquals(name, todolist.getName().getValue());
+        assertEquals(name, todolist.getName().value());
         verify(todolistRepository).save(any());
         verify(outboxMessageRepository).create(any(OutboxMessage.class));
     }

@@ -4,37 +4,42 @@ import io.micrometer.observation.annotation.Observed;
 import lombok.AllArgsConstructor;
 import org.gplumey.common.domain.core.eventing.DomainEventDispatcher;
 import org.gplumey.todolist.domain.core.entity.Todolist;
-import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
-import org.gplumey.todolist.domain.core.execption.TodolistAlreadyExistsException;
+import org.gplumey.todolist.domain.core.execption.TodolistNotFoundException;
 import org.gplumey.todolist.domain.service.port.input.UseCases;
-import org.gplumey.todolist.domain.service.port.input.command.CreateTodolistCommand;
+import org.gplumey.todolist.domain.service.port.input.command.DeleteTodolistCommand;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.gplumey.todolist.domain.service.port.output.TodolistWriteRepository;
 import org.gplumey.todolist.domain.service.validation.UsecaseValidator;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 @Component
 @Observed
-public class CreateTodolistUseCaseImpl implements UseCases.Commands.CreateTodolistUseCase {
+public class DeleteTodolistUseCaseImpl implements UseCases.Commands.DeleteTodolistUseCase {
 
 
     private final DomainEventDispatcher dispatcher;
-    private final TodolistWriteRepository repository;
+    private final TodolistWriteRepository writeRepository;
     private final TodolistReadRepository readRepository;
 
     private final UsecaseValidator validator;
 
     @Override
-    public Todolist execute(CreateTodolistCommand command) {
-        validator.validate(command);
-        var todolistName = TodolistName.of(command.getName());
-        if (readRepository.findByName(todolistName).isPresent()) {
-            throw new TodolistAlreadyExistsException(todolistName);
-        }
+    public Void execute(DeleteTodolistCommand command) {
+        //validator.validate(command);
 
-        Todolist newTodolist = Todolist.create(command.getName());
-        newTodolist.fireEvents(dispatcher);
-        return repository.save(newTodolist);
+        Optional<Todolist> optional = readRepository.findById(command.getTodolistId());
+
+        Todolist todolist = optional.orElseThrow(() -> {
+            throw new TodolistNotFoundException(command.getTodolistId());
+        });
+
+
+        todolist.delete();
+        todolist.fireEvents(dispatcher);
+        writeRepository.delete(todolist);
+        return null;
     }
 }

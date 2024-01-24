@@ -4,6 +4,7 @@ import org.gplumey.common.domain.core.eventing.DomainEvent;
 import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.event.TodoCreatedEvent;
 import org.gplumey.todolist.domain.core.event.TodoListCreatedEvent;
+import org.gplumey.todolist.domain.core.event.TodolistDeletedEvent;
 import org.gplumey.todolist.infra.messaging.avro.model.*;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ public class AvroModelMapper {
         return switch (event) {
             case TodoListCreatedEvent evt -> adaptor(evt);
             case TodoCreatedEvent evt -> adaptor(evt);
+            case TodolistDeletedEvent evt -> adaptor(evt);
             default -> throw new IllegalArgumentException(event.getClass() + " not supported");
         };
     }
@@ -26,7 +28,7 @@ public class AvroModelMapper {
         return TodolistCreatedEventAvro.newBuilder()
                                        .setTodolist(TodolistAvro.newBuilder()
                                                                 .setId(event.getSource().getId().getValue().toString())
-                                                                .setName(event.getSource().getName().getValue())
+                                                                .setName(event.getSource().getName().value())
                                                                 .setTodos(map(event.getSource().getTodos()))
                                                                 .build()).setHeader(mapHeader(event)).build();
     }
@@ -34,11 +36,20 @@ public class AvroModelMapper {
     private static TodoCreatedEventAvro adaptor(TodoCreatedEvent event) {
         var todo = TodoAvro.newBuilder()
                            .setId(event.getTodo().getId().getValue().toString())
-                           .setLabel(event.getTodo().getLabel().getValue())
+                           .setLabel(event.getTodo().getLabel().value())
                            .setTodolistId(event.getSource().getId().getValue().toString())
                            .build();
         return TodoCreatedEventAvro.newBuilder()
                                    .setTodo(todo).setHeader(mapHeader(event)).build();
+    }
+
+    private static TodolistDeletedEventAvro adaptor(TodolistDeletedEvent event) {
+        return TodolistDeletedEventAvro.newBuilder()
+                                       .setTodolist(TodolistAvro.newBuilder()
+                                                                .setId(event.getSource().getId().getValue().toString())
+                                                                .setName(event.getSource().getName().value())
+                                                                .setTodos(map(event.getSource().getTodos()))
+                                                                .build()).setHeader(mapHeader(event)).build();
     }
 
 
@@ -59,7 +70,7 @@ public class AvroModelMapper {
         return TodoAvro.newBuilder()
                        .setId(todo.getId().getValue().toString())
                        .setTodolistId(todo.getTodolistId().getValue().toString())
-                       .setLabel(todo.getLabel().getValue())
+                       .setLabel(todo.getLabel().value())
                        .build();
     }
 }

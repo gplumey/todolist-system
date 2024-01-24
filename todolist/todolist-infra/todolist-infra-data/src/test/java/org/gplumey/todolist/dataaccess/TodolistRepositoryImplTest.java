@@ -1,5 +1,6 @@
 package org.gplumey.todolist.dataaccess;
 
+import org.assertj.core.api.Assertions;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.service.port.output.TodolistReadRepository;
 import org.junit.jupiter.api.Test;
@@ -9,9 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 class TodolistRepositoryImplTest {
@@ -24,6 +22,6 @@ class TodolistRepositoryImplTest {
     void findAll() {
         List<Todolist> result = StreamSupport.stream(readRepository.findAll().spliterator(), false)
                                              .collect(Collectors.toList());
-        assertThat(result, contains(hasProperty("name", hasProperty("value", equalTo("first todolist")))));
+        Assertions.assertThat(result).hasSize(1).extracting(todolist -> todolist.getName().value()).containsExactlyInAnyOrder("first todolist");
     }
 }

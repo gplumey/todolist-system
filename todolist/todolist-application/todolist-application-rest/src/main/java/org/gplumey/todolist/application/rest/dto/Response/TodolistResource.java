@@ -24,7 +24,7 @@ public class TodolistResource extends RepresentationModel<TodolistResource> {
     public static TodolistResource of(Todolist domain) {
         TodolistResource dto = TodolistResource.builder()
                                                .id(domain.getId().getValue().toString())
-                                               .name(domain.getName().getValue())
+                                               .name(domain.getName().value())
                                                .todos(domain.getTodos().stream().map(TodoResource::of).toList())
                                                .build();
 
