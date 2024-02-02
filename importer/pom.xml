@@ -5,15 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.gplumey</groupId>
-    <artifactId>todolist</artifactId>
+    <artifactId>importer</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>todolist-container</module>
-        <module>todolist-application</module>
-        <module>todolist-domain</module>
-        <module>todolist-infra</module>
-        <module>jacoco-report-aggregate</module>
+        <module>importer-container</module>
+        <module>importer-application</module>
+        <module>importer-domain</module>
+        <module>importer-infra</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -45,42 +44,38 @@
             </dependency>
             <dependency>
                 <groupId>org.gplumey</groupId>
-                <artifactId>todolist-container</artifactId>
+                <artifactId>importer-domain-core</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.gplumey</groupId>
-                <artifactId>todolist-application-rest</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.gplumey</groupId>
-                <artifactId>todolist-application-graphql</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.gplumey</groupId>
-                <artifactId>todolist-domain-core</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.gplumey</groupId>
-                <artifactId>todolist-domain-service</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.gplumey</groupId>
-                <artifactId>todolist-infra-data</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.gplumey</groupId>
-                <artifactId>todolist-infra-messaging</artifactId>
+                <artifactId>importer-container</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.gplumey</groupId>
                 <artifactId>importer-application-rest</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.gplumey</groupId>
+                <artifactId>importer-infra-fs</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.gplumey</groupId>
+                <artifactId>importer-domain-service</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.gplumey</groupId>
+                <artifactId>import-infra-batch</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.gplumey</groupId>
+                <artifactId>importer-infra-data</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
