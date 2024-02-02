@@ -5,6 +5,6 @@ import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
 
 public class TodolistAlreadyExistsException extends DomainException {
     public TodolistAlreadyExistsException(TodolistName todolistName) {
-        super("Todolist with name '%s' already exists".formatted(todolistName.getValue()));
+        super("Todolist with name '%s' already exists".formatted(todolistName.value()));
     }
 }

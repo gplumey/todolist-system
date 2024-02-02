@@ -2,11 +2,13 @@ package org.gplumey.todolist.application.rest;
 
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.gplumey.todolist.application.rest.dto.Response.TodolistResource;
 import org.gplumey.todolist.application.rest.dto.request.CreateTodolistDto;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.service.port.input.UseCases;
+import org.gplumey.todolist.domain.service.port.input.command.DeleteTodolistCommand;
 import org.gplumey.todolist.domain.service.port.input.query.GetAllTodolistQuery;
 import org.gplumey.todolist.domain.service.port.input.query.GetTodolistQuery;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,12 @@ import java.util.stream.StreamSupport;
 @RestController
 @RequestMapping(value = "/todolist")
 @AllArgsConstructor
+@CrossOrigin//(origins = "http://localhost:5173")
+@Slf4j
 public class TodolistRestController {
     private final UseCases.Commands.CreateTodolistUseCase createTodolistUserCase;
+    private final UseCases.Commands.DeleteTodolistUseCase deleteTodolistUserCase;
+
     private final UseCases.Queries.GetAllTodolistUseCase getAllTodolistUseCase;
     private final UseCases.Queries.GetTodolistUsecase getTodolistUsecase;
 
@@ -44,5 +50,16 @@ public class TodolistRestController {
     public TodolistResource createTodolist(@RequestBody CreateTodolistDto command) {
         Todolist todolist = createTodolistUserCase.execute(CreateTodolistDto.adaptor(command));
         return TodolistResource.of(todolist);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable UUID id) {
+        log.info("Delete " + id);
+        deleteTodolistUserCase.execute(new DeleteTodolistCommand() {
+            @Override
+            public TodolistId getTodolistId() {
+                return TodolistId.of(id);
+            }
+        });
     }
 }

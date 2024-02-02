@@ -47,7 +47,7 @@ class GetTodolistUseCaseTest {
     @Test
     void should_create_todolist_given_valid_request() {
         Todolist todolist = useCase.request(getTodolistQueryAdpator(TODOLIST_UUID));
-        assertEquals("Test todolist", todolist.getName().getValue());
+        assertEquals("Test todolist", todolist.getName().value());
     }
 
     @Test

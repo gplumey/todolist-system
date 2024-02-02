@@ -3,6 +3,7 @@ package org.gplumey.todolist.domain.service.cucumber;
 import io.cucumber.java.en.Then;
 import org.gplumey.todolist.domain.core.event.TodoCreatedEvent;
 import org.gplumey.todolist.domain.core.event.TodoListCreatedEvent;
+import org.gplumey.todolist.domain.core.event.TodolistDeletedEvent;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.event.ApplicationEvents;
@@ -15,7 +16,7 @@ public class SharedEventingStepsDefinitions {
         return switch (event) {
             case "Todolist Created" -> TodoListCreatedEvent.class;
             case "Todo Created" -> TodoCreatedEvent.class;
-
+            case "Todolist Deleted" -> TodolistDeletedEvent.class;
             default -> throw new IllegalStateException("Unexpected value: " + event);
         };
     }

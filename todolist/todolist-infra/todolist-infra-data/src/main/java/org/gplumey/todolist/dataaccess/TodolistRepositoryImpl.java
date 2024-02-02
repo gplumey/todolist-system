@@ -44,4 +44,9 @@ public class TodolistRepositoryImpl implements TodolistWriteRepository, Todolist
         map.put(todolist.getId(), todolist);
         return todolist;
     }
+
+    @Override
+    public void delete(Todolist todolist) {
+        map.remove(todolist.getId());
+    }
 }

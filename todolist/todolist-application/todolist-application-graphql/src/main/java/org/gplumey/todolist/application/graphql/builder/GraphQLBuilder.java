@@ -11,7 +11,7 @@ public class GraphQLBuilder {
     public static TodolistGraphQL of(Todolist entity, DataFetchingFieldSelectionSet selectionSet) {
         var dto = new TodolistGraphQL();
         dto.setId(entity.getId().getValue().toString());
-        dto.setName(entity.getName().getValue());
+        dto.setName(entity.getName().value());
 
         if (selectionSet.contains("todos")) {
             dto.setTodos(entity.getTodos().stream().map(todo -> of(todo, selectionSet)).toList());
@@ -22,7 +22,7 @@ public class GraphQLBuilder {
     public static TodoGraphQL of(Todo entity, DataFetchingFieldSelectionSet selectionSet) {
         var dto = new TodoGraphQL();
         dto.setId(entity.getId().getValue().toString());
-        dto.setLabel(entity.getLabel().getValue());
+        dto.setLabel(entity.getLabel().value());
         return dto;
     }
 }

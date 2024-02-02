@@ -40,6 +40,8 @@ public abstract class DomainEvent<T> implements OutboxMessagePayload {
 
     public enum Types implements EventType {
         TODOLIST_CREATE("todolist.create.event"),
+        TODOLIST_DELETE("todolist.delete.event"),
+
         TODO_CREATE("todolist.todo.create.event");
 
 

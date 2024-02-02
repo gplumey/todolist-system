@@ -21,7 +21,7 @@ public class TodoResource extends RepresentationModel<TodolistResource> {
     private final String label;
 
     public static TodoResource of(Todo todo) {
-        TodoResource dto = TodoResource.builder().id(todo.getId().getValue()).label(todo.getLabel().getValue()).build();
+        TodoResource dto = TodoResource.builder().id(todo.getId().getValue()).label(todo.getLabel().value()).build();
 
         dto.add(linkTo(methodOn(TodoRestController.class).get(todo.getTodolistId().getValue(),
                 todo.getId().getValue())).withSelfRel());

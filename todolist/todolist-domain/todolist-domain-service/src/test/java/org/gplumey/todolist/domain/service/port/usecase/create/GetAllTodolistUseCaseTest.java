@@ -48,7 +48,7 @@ class GetAllTodolistUseCaseTest {
         Iterable<Todolist> todolists = useCase.request(new GetAllTodolistQuery() {
         });
         Collection<String> todolistNames = StreamSupport.stream(todolists.spliterator(), true)
-                                                        .map(todolist -> todolist.getName().getValue())
+                                                        .map(todolist -> todolist.getName().value())
                                                         .collect(Collectors.toList());
         assertThat(todolistNames, hasItems("todolist 1", "todolist 2"));
     }

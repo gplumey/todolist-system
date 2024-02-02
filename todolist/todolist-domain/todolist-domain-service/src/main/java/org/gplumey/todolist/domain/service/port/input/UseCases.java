@@ -6,6 +6,7 @@ import org.gplumey.todolist.domain.core.entity.Todo;
 import org.gplumey.todolist.domain.core.entity.Todolist;
 import org.gplumey.todolist.domain.service.port.input.command.CreateTodoCommand;
 import org.gplumey.todolist.domain.service.port.input.command.CreateTodolistCommand;
+import org.gplumey.todolist.domain.service.port.input.command.DeleteTodolistCommand;
 import org.gplumey.todolist.domain.service.port.input.query.GetAllTodolistQuery;
 import org.gplumey.todolist.domain.service.port.input.query.GetTodoQuery;
 import org.gplumey.todolist.domain.service.port.input.query.GetTodolistQuery;
@@ -17,6 +18,9 @@ public class UseCases {
     public static class Commands {
 
         public interface CreateTodolistUseCase extends CommandHandler<Todolist, CreateTodolistCommand> {
+        }
+
+        public interface DeleteTodolistUseCase extends CommandHandler<Void, DeleteTodolistCommand> {
         }
 
 

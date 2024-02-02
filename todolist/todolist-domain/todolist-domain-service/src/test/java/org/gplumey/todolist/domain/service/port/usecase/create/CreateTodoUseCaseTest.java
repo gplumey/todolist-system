@@ -71,7 +71,7 @@ class CreateTodoUseCaseTest {
     @MethodSource
     void should_add_todo_given_valid_request(String name) {
         Todo task = useCase.execute(createTodoCommandAdaptor(TODOLIST_UUID, name));
-        assertEquals(name, task.getLabel().getValue());
+        assertEquals(name, task.getLabel().value());
         verify(writeRepository).save(any());
         verify(eventPublisher).publish(any(TodoCreatedEvent.class));
     }

@@ -10,6 +10,7 @@ import org.gplumey.todolist.domain.core.entity.valueobject.TodolistId;
 import org.gplumey.todolist.domain.core.entity.valueobject.TodolistName;
 import org.gplumey.todolist.domain.core.event.TodoCreatedEvent;
 import org.gplumey.todolist.domain.core.event.TodoListCreatedEvent;
+import org.gplumey.todolist.domain.core.event.TodolistDeletedEvent;
 import org.gplumey.todolist.domain.core.event.TodolistEvent;
 import org.gplumey.todolist.domain.core.execption.TodoLimitExceededTodolistException;
 
@@ -68,5 +69,9 @@ public class Todolist extends AggregateRoot<TodolistId, TodolistEvent> {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    public void delete() {
+        this.addDomainEvent(new TodolistDeletedEvent(this));
     }
 }
